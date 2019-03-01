@@ -1,0 +1,2 @@
+<a href="#edit_pic" class="badge bg-yellow" data-toggle="modal" data-username="{{ $pic->user->name }}" data-institution_name="{{ $pic->institution->name}}" data-user_id="{{ $pic->user_id }}" data-institution_id="{{ $pic->institution_id}}" data-pic="{{ $pic->id }}"><i class="fa fa-pencil"></i></a>
+&nbsp;&nbsp;<a href="#del_pic" data-pic="{{ $pic->id }}" class="badge bg-red" data-toggle="modal"><i class="fa fa-trash"></i></a>

@@ -1,0 +1,2 @@
+<a href="#edit_schedule" class="badge bg-yellow" data-toggle="modal" data-username="{{ $schedule->user->name }}" data-user_id="{{ $schedule->user_id }}" data-subject_name="{{ $schedule->subject->name }}" data-subject_id="{{ $schedule->subject_id }}" data-id="{{ $schedule->id }}" data-timeschedule="{{$schedule->timeschedule}}" data-jam="{{$schedule->jam}}" data-jp="{{$schedule->jp}}"><i class="fa fa-pencil"></i></a>
+&nbsp;&nbsp;<a href="#del_schedule" data-schedule_id="{{ $schedule->id }}" class="badge bg-red" data-toggle="modal"><i class="fa fa-trash"></i></a>
