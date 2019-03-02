@@ -24,10 +24,10 @@ class ScheduleRequest extends FormRequest
     public function rules()
     {
         return [
-            'dateschedule' => 'required',
+            'masterschedule_id' => 'required',
             'user_id' => 'required',
-            'training_id' => 'required',
             'subject_id' => 'required',
+            'dateschedule' => 'required',           
             'timeschedule' => 'required',
             'sessionschedule' => 'required',
             'jp' => 'required'

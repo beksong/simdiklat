@@ -9,7 +9,8 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Jadwal Diklat / Schedule</li>
-        <li class="active">{{$training->name}}</li>
+        <li>Master Jadwal {{ $mschedule->training->name }}</li>
+        <li class="active">Detail Jadwal {{$mschedule->type}} / {{$mschedule->nameschedulemaster}}, {{$mschedule->training->name}}</li>
     </ol>
 </section>
 <!-- main content -->
@@ -44,20 +45,9 @@
                     <h3 class="box-title">Tambah Data Jadwal Diklat</h3>
                 </div>
                 <!-- form profile -->
-                <form action="{{ route('schedules') }}" method="post">
+                <form action="{{ route('savedetailschedule') }}" method="post">
                     @csrf
-                    <input type="hidden" value="{{ $training->id }}" name="training_id">
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="name" class="control-label">Tanggal</label>
-
-                            <input type="text" id="dateschedule" name="dateschedule" data-date-format="yyyy-mm-dd" class="form-control{{ $errors->has('dateschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock1" placeholder="Tanggal mata diklat diajarkan" required>
-                            <span class="fa fa-calendar form-control-feedback"></span>
-                            @if($errors->has('dateschedule'))
-                                <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('dateschedule') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
+                    <input type="hidden" value="{{ $mschedule->id }}" name="masterschedule_id" id="masterschedule_id">
 
                     <div class="box-body">
                         <div class="form-group has-feedback">
@@ -79,9 +69,21 @@
                             <select name="subject_id" id="subject_id" class="form-control" required>
                                 <option value="">-- Pilih Mata Diklat --</option>
                             </select>
-                            <span class="fa fa-file form-control-feedback"></span>
+                            <span class="fa fa-book form-control-feedback"></span>
                             @if($errors->has('subject_id'))
                                 <span id="helpBlock3" class="help-block"><strong>{{ $errors->first('subject_id') }}</strong></span> 
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="form-group has-feedback">
+                            <label for="name" class="control-label">Tanggal</label>
+
+                            <input type="text" id="dateschedule" name="dateschedule" data-date-format="yyyy-mm-dd" class="form-control{{ $errors->has('dateschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock1" placeholder="Tanggal mata diklat diajarkan" required>
+                            <span class="fa fa-calendar form-control-feedback"></span>
+                            @if($errors->has('dateschedule'))
+                                <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('dateschedule') }}</strong></span> 
                             @endif
                         </div>
                     </div>
@@ -102,8 +104,14 @@
                         <div class="form-group has-feedback">
                             <label for="name" class="control-label">Sesi</label>
 
-                            <input type="number" min="1" max="4" id="sessionschedule" name="sessionschedule" class="form-control{{ $errors->has('sessionschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock5" placeholder="sesi ke- ex. 1,2,5..." required>
-                            <span class="fa fa-check form-control-feedback"></span>
+                            <select name="sessionschedule" id="sessionschedule" class="form-control{{ $errors->has('sessionschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock5" required>
+                                <option value="">-- Pilih Sesi Pembelajaran --</option>
+                                <option value="1"> Sesi 1 </option>
+                                <option value="2"> Sesi 2 </option>
+                                <option value="3"> Sesi 3 </option>
+                                <option value="4"> Sesi 4 </option>
+                            </select>
+                            <span class="fa fa-code-fork form-control-feedback"></span>
                             @if($errors->has('sessionschedule'))
                                 <span id="helpBlock5" class="help-block"><strong>{{ $errors->first('sessionschedule') }}</strong></span> 
                             @endif
@@ -115,7 +123,7 @@
                             <label for="name" class="control-label">Jumlah JP</label>
 
                             <input type="number" min="1" id="jp" name="jp" class="form-control{{ $errors->has('jp') ? ' is-invalid' : '' }}" aria-describedby="helpBlock6" placeholder="isi dengan angka ex. 1, 2,..." required>
-                            <span class="fa fa-check form-control-feedback"></span>
+                            <span class="fa fa-calculator form-control-feedback"></span>
                             @if($errors->has('jp'))
                                 <span id="helpBlock6" class="help-block"><strong>{{ $errors->first('jp') }}</strong></span> 
                             @endif
@@ -145,7 +153,7 @@
         <div class="col-md-8 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Jadwal {{ $training->name }}</h3>
+                    <h3 class="box-title">Detail Jadwal {{$mschedule->type}} / {{$mschedule->nameschedulemaster}}, {{$mschedule->training->name}}</h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tb-schedules" class="table table-striped table-bordered">
@@ -203,36 +211,36 @@ $(document).ready(function(){
         },
     });
     // datatables
-    $('#tb-schedules').DataTable({
-        processing: true,
-        serverSide: true,
-        paging      : true,
-        lengthChange: true,
-        searching   : true,
-        ordering    : true,
-        info        : true,
-        autoWidth   : true,
-        ajax : {
-            type : 'GET',
-            url : '{!! route('getschedules') !!}',
-            dataType : 'json',
-            data : {q: '{!! $training->id !!}'}
-        },
-        fnCreatedRow: function (row, data, index) {
-            $('td', row).eq(0).html(index + 1);
-        },
-        columns : [
-            { data : null, sortable : false},
-            { data : "dateschedule",name : 'dateschedule'},
-            { data : "user.name",name : 'user.name'},
-            { data : "subject.name",name : 'subject.name'},
-            { data : "timeschedule",name : 'timeschedule'},
-            { data : "sessionschedule",name : 'sessionschedule'},
-            { data : "jp",name : 'jp'},
-            { data : "description",name : 'description'},
-            { data : "action",name : "action",orderable : false, searchable : false},
-        ],
-    });
+    // $('#tb-schedules').DataTable({
+    //     processing: true,
+    //     serverSide: true,
+    //     paging      : true,
+    //     lengthChange: true,
+    //     searching   : true,
+    //     ordering    : true,
+    //     info        : true,
+    //     autoWidth   : true,
+    //     ajax : {
+    //         type : 'GET',
+    //         url : '{!! route('getschedules') !!}',
+    //         dataType : 'json',
+    //         data : {q: '{!! $mschedule->id !!}'}
+    //     },
+    //     fnCreatedRow: function (row, data, index) {
+    //         $('td', row).eq(0).html(index + 1);
+    //     },
+    //     columns : [
+    //         { data : null, sortable : false},
+    //         { data : "dateschedule",name : 'dateschedule'},
+    //         { data : "user.name",name : 'user.name'},
+    //         { data : "subject.name",name : 'subject.name'},
+    //         { data : "timeschedule",name : 'timeschedule'},
+    //         { data : "sessionschedule",name : 'sessionschedule'},
+    //         { data : "jp",name : 'jp'},
+    //         { data : "description",name : 'description'},
+    //         { data : "action",name : "action",orderable : false, searchable : false},
+    //     ],
+    // });
 });
 
 $('#user_id').on('select2:select',function(e){

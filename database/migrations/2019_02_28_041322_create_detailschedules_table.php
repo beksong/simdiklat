@@ -20,7 +20,7 @@ class CreateDetailschedulesTable extends Migration
             $table->integer('subject_id')->unsigned();
             $table->date('dateschedule');
             $table->string('timeschedule');
-            $table->integer('session')->unsigned();
+            $table->integer('sessionschedule')->unsigned();
             $table->integer('jp')->unsigned();
             $table->string('description')->nullable();
             $table->timestamps();

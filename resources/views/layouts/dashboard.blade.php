@@ -75,8 +75,8 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        @if(\Auth::user()->foto!==null)
-                          <img src="{{ url('storage/profile/'.\Auth::user()->foto) }}" class="img-circle" alt="User Image">
+                        @if(\Auth::user()->photo!==null)
+                          <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
                         @else
                           <img src="{{ URL::to('/')}}../../dist/img/avatar5.png" class="img-circle" alt="User Image">
                         @endif
@@ -265,8 +265,8 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              @if(\Auth::user()->foto!=null)
-                <img src="{{ url('storage/profile/'.\Auth::user()->foto) }}" class="user-image" alt="User Image">
+              @if(\Auth::user()->photo!=null)
+                <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="user-image" alt="User Image">
               @else
                 <!-- <img src="dist/img/avatar5.png" class="user-image" alt="User Image"> -->
               @endif
@@ -275,8 +275,8 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                @if(\Auth::user()->foto!=null)
-                  <img src="{{ url('storage/profile/'.\Auth::user()->foto) }}" class="img-circle" alt="User Image">
+                @if(\Auth::user()->photo!=null)
+                  <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
                 @else
                   <!-- <img src="dist/img/avatar5.png" class="img-circle" alt="User Image"> -->
                 @endif
@@ -330,8 +330,8 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          @if(\Auth::user()->foto!=null)
-            <img src="{{ url('storage/profile/'.\Auth::user()->foto) }}" class="img-circle" alt="User Image">
+          @if(\Auth::user()->photo!=null)
+            <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
           @else
             <!-- <img src="dist/img/avatar5.png" class="img-circle" alt="User Image"> -->
           @endif

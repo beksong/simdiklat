@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Training;
-use App\Schedule;
+use App\Detailschedule;
 use DataTables;
 use Carbon\Carbon;
 use Grei\TanggalMerah;
 use App\MasterSchedule;
 use App\Http\Requests\MasterScheduleRequest;
-
 use App\Http\Requests\ScheduleRequest;
 
 class ScheduleController extends Controller
@@ -39,18 +38,51 @@ class ScheduleController extends Controller
         return redirect()->back()->with('message','Data telah disimpan');
     }
 
+    public function update(MasterScheduleRequest $request)
+    {
+        $schedule_id = $request->get('masterschedule_id');
+        $mschedule = Masterschedule::find($schedule_id);
+        $mschedule->update([
+            'training_id' => $request->get('training_id'),
+            'type' => $request->get('typeschedule'),
+            'nameschedulemaster' => $request->get('nameschedule')
+        ]);
+
+        return redirect()->back()->with('message','Data telah diupdate');
+    }
+
+    public function delete(Request $request)
+    {
+        $mschedule = Masterschedule::find($request->get('masterschedule_id'));
+        $mschedule->delete();
+        return redirect()->back()->with('message','Data telah dihapus');
+    }
+
     // datatables for masterschedules
     public function getschedulemasters(Request $request)
     {
         $training_id=$request->get('q');
-        $masters = Training::with('masterschedule')->where('training_id',$training_id)->get();
-        return DataTables::of(masters)
+        $masters = Masterschedule::with('training')->where('training_id',$training_id)->get();
+        return DataTables::of($masters)
         ->addColumn('action',function($master){
-            
-        })->toJson();
+            return view('schedule.tbbuttonmaster',compact('master'));
+        })
+        ->addColumn('detail',function($master){
+           return view('schedule.tbbuttontodetail',compact('master')); 
+        })
+        ->addColumn('print',function($master){
+            return '<a href="#" class="badge bg-blue"><i class="fa fa-print"></i></a>'; 
+        })->rawColumns(['action','detail','print'])->toJson();
     }
 
-    public function save(ScheduleRequest $request)
+    // detail schedules start here
+    public function indexdetail($mschedule_id)
+    {
+        $mschedule = MasterSchedule::find($mschedule_id);
+        return view('schedule.schedules',compact('mschedule'));
+    }
+
+    public function savedetail(ScheduleRequest $request)
     {
         $tanggal = Carbon::parse($request->get('dateschedule'));
         //check weekend
@@ -63,40 +95,40 @@ class ScheduleController extends Controller
         if($isHoliday->is_holiday()){
             return redirect()->back()->with('message','Hari Libur Nasional tidak bisa dipilih sebagai hari diklat');
         }
-        // check if someone has a schedule on current date
-        $schedule=Schedule::where('user_id',$request->get('user_id'))->where('sessionschedule',$request->get('sessionschedule'))->get();
+        // check if someone has a schedule on current session
+        $schedule=Detailschedule::where('user_id',$request->get('user_id'))->where('sessionschedule',$request->get('sessionschedule'))->get();
         
         if($schedule->isEmpty()){
             // store data right here
-            $schedule = new Schedule(array(
-                'training_id' => $request->get('training_id'),
-                'dateschedule' => $request->get('dateschedule'),
+            $schedule = new Detailschedule(array(
+                'masterschedule_id' => $request->get('masterschedule_id'),
                 'user_id' => $request->get('user_id'),
                 'subject_id' => $request->get('subject_id'),
+                'dateschedule' => $request->get('dateschedule'),
                 'timeschedule' => $request->get('timeschedule'),
-                'jp' => $request->get('jp'),
                 'sessionschedule' => $request->get('sessionschedule'),
+                'jp' => $request->get('jp'),
                 'description' => $request->get('description')
             ));
     
             $schedule->save();
-            return redirect('schedules/'.$schedule->training_id)->with('message','Berhasil menyimpan data');
+            return redirect('schedules/detailschedules/'.$schedule->masterschedule_id)->with('message','Berhasil menyimpan data');
         }
 
         // return if someone has a schedule on current data
         foreach($schedule as $sched){
-            return redirect('schedules/'.$sched->training_id)->with('message','Maaf beliau sedang mengajar di '.$sched->training->name.' pada tanggal '.$sched->dateschedule.' sesi ke : '.$sched->sessionschedule.' silahkan pilih tanggal lainnya');
+            return redirect('schedules/detailschedules'.$sched->masterschedule_id)->with('message','Maaf beliau sedang mengajar di '.$sched->training->name.' pada tanggal '.$sched->dateschedule.' sesi ke : '.$sched->sessionschedule.' silahkan pilih tanggal lainnya');
         }
     }
 
     public function getschedules(Request $req)
     {
-        $training_id = $req->get('q');
-        $schedules=Schedule::with('user','subject')->where('training_id',$training_id)->orderBy('dateschedule','asc')->get();
-        return DataTables::of($schedules)
-        ->addColumn('action',function($schedule){
-            return view('schedule.tbbutton',compact('schedule'));
-        })->toJson();
+        // $training_id = $req->get('q');
+        // $schedules=Schedule::with('user','subject')->where('training_id',$training_id)->orderBy('dateschedule','asc')->get();
+        // return DataTables::of($schedules)
+        // ->addColumn('action',function($schedule){
+        //     return view('schedule.tbbutton',compact('schedule'));
+        // })->toJson();
     }
 }
 

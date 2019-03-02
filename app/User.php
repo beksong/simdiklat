@@ -38,8 +38,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Speaker');
     }
 
-    public function schedules()
+    public function detailschedules()
     {
-        return $this->hasMany('App\Schedule');
+        return $this->hasMany('App\Detailschedule');
     }
 }

@@ -13,8 +13,8 @@ class Subject extends Model
         return $this->hasMany('App\Speaker');
     }
 
-    public function schedules()
+    public function detailschedules()
     {
-        return $this->hasMany('App\Schedules');
+        return $this->hasMany('App\Detailschedule');
     }
 }
