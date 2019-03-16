@@ -78,5 +78,9 @@ Route::delete('schedules','ScheduleController@delete')->name('schedules');
 Route::get('getschedules','ScheduleController@getschedulemasters')->name('getschedules');
 
 // schedules details
-Route::get('schedules/detailschedules/{mschedule_id}','ScheduleController@indexdetail')->name('detailschedules');
+Route::get('schedules/detailschedules/{type}/{mschedule_id}','ScheduleController@indexdetail')->name('detailschedules');
 Route::post('schedules/detailschedules','ScheduleController@savedetail')->name('savedetailschedule');
+Route::put('schedules/updateschedules','ScheduleController@updatedetail')->name('updatedetailschedule');
+
+// ajax datatables detailschedules
+Route::get('getdetailschedules','ScheduleController@getdetailschedules')->name('getdetailschedules');

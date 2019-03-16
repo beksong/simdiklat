@@ -50,6 +50,7 @@ class TrainingController extends Controller
             }
         }
 
+        //return $request->all();
         $training = new Training(array(
             'name' => $request->get('name'),
             'slug' => str_slug($request->get('name')),

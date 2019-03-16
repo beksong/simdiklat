@@ -54,8 +54,8 @@
 
                             <select class="form-control"  id="typeschedule" name="typeschedule" required>
                                 <option value="">--Pilih Jenis / Tipe Jadwal --</option>
-                                <option value="On Class"> On Class </option>
-                                <option value="Off Class"> Off Class </option>
+                                <option value="On_Class"> On Class </option>
+                                <option value="Off_Class"> Off Class </option>
                                 <option value="Benchmarking"> Benchmarking </option>
                             </select>
                             @if($errors->has('typeschedule'))
@@ -192,32 +192,6 @@
 @push('jscript')
 <script>
 $(document).ready(function(){
-    // select2
-    // $('#user_id').select2({
-    //     placeholder : "Ketikkan nama user : ex. jhon, budi, andi irawati",
-    //     minimumInputLength : 4,
-    //     ajax: {
-    //         delay : 250,
-    //         dataType : "json",
-    //         url : '{!! route('getuserselect2') !!}',
-    //         data : function(params){
-    //             return {
-    //                 q : $.trim(params.term)
-    //             };
-    //         },
-    //         processResults : function(data){
-    //             return {
-    //                 results : $.map(data,function(user){
-    //                     return {
-    //                         text : user.name,
-    //                         id : user.id
-    //                     }
-    //                 })
-    //             };
-    //         },
-    //         cache: true,
-    //     },
-    // });
     // datatables
     $('#tb-masterschedules').DataTable({
         processing: true,
@@ -248,22 +222,6 @@ $(document).ready(function(){
         ],
     });
 });
-
-// $('#user_id').on('select2:select',function(e){
-//     var user = e.params.data;
-//     $.ajax({
-//         type : 'GET',
-//         dataType : "json",
-//         url : '{!! route('getsubjectbyid') !!}',
-//         data : {q:user.id},
-//         success : function(subjects){
-//             $('#subject_id').val("");
-//             $.map(subjects,function(subject){
-//                 $('#subject_id').append("<option value="+subject.subject.id+">"+subject.subject.name+"</option>");
-//             });
-//         }
-//     });
-// });
 
 $('#edit_masterschedule').on('show.bs.modal',function(e){
     modal = $(this);
