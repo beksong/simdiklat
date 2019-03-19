@@ -302,6 +302,33 @@
         </div>
     </div>
 </div>
+
+<!-- modal delete detail schedule -->
+<div class="modal modal-danger fade" id="del_schedule">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Hapus Data</h4>
+            </div>
+            <div class="modal-body">
+            <p>Yakin Akan Jadwal?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+            <form method="post" id="frm_delete_schedule" action="{{ route('deletedetailschedule') }}">
+                    @csrf
+                    {{ method_field('DELETE')}}
+                    <input type="hidden" id="schedule_id" name="schedule_id">
+                    <button type="submit" class="btn btn-outline"> <i class="fa fa-btn fa-trash"></i> Hapus Data</button>
+            </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 @endsection
 
 @push('jscript')
@@ -385,6 +412,9 @@ $(document).ready(function(){
 });
 
 $(function(){
+    /** 
+    * update schedule modal
+    */
     $('#updatedetailschedule').on('show.bs.modal',function(e){
         var modal = $(this);
         var lnk = $(e.relatedTarget);
@@ -472,6 +502,13 @@ $(function(){
         .on('show',function(evt){
             return false;
         });
+    });
+
+    $('#del_schedule').on('show.bs.modal',function(e){
+        var mdl = $(this);
+        var lnk = $(e.relatedTarget);
+
+        mdl.find('.modal-footer #schedule_id').val(lnk.data('schedule_id'));
     });
 });
 

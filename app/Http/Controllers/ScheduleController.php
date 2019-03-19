@@ -11,6 +11,7 @@ use Grei\TanggalMerah;
 use App\MasterSchedule;
 use App\Http\Requests\MasterScheduleRequest;
 use App\Http\Requests\ScheduleRequest;
+use PDF;
 
 class ScheduleController extends Controller
 {
@@ -71,7 +72,7 @@ class ScheduleController extends Controller
            return view('schedule.tbbuttontodetail',compact('master')); 
         })
         ->addColumn('print',function($master){
-            return '<a href="#" class="badge bg-blue"><i class="fa fa-print"></i></a>'; 
+            return '<a href="detailschedules/print/'.$master->type.'/'.$master->id.'" class="badge bg-blue"><i class="fa fa-print"></i></a>'; 
         })->rawColumns(['action','detail','print'])->toJson();
     }
 
@@ -179,7 +180,24 @@ class ScheduleController extends Controller
                 return redirect()->back()->with('message','Maaf beliau sedang mengajar di '.$sched->masterschedule->training->name.' pada tanggal '.$sched->dateschedule.' sesi ke : '.$sched->sessionschedule.' silahkan pilih tanggal lainnya');
             }
         }
+    }
 
+    public function deletedetail(Request $request)
+    {
+        $detail= Detailschedule::find($request->get('schedule_id'));
+        $detail->delete();
+        return redirect()->back()->with('message','Berhasil Menghapus Data');
+    }
+
+    /**
+     * print detailschedule from master pages
+     */
+    public function printdetailschedule($type,$mschedule_id)
+    {
+        $mschedule = MasterSchedule::where('type',$type)->where('id',$mschedule_id)->firstOrFail();
+        //return view('report.schedules.detailschedule',compact('mschedule'));
+        $pdf = PDF::loadView('report.schedules.detailschedule',compact('mschedule'))->setPaper('a4')->setOrientation('landscape');
+        return $pdf->download('test.pdf');    
     }
 
     // ajax datatables for detailschedules
