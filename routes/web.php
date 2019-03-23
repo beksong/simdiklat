@@ -87,3 +87,13 @@ Route::delete('schedules/deleteschedules','ScheduleController@deletedetail')->na
 Route::get('schedules/detailschedules/print/{type}/{mschedule_id}','ScheduleController@printdetailschedule')->name('printdetailschedule');
 // ajax datatables detailschedules
 Route::get('getdetailschedules','ScheduleController@getdetailschedules')->name('getdetailschedules');
+
+// open registration training
+Route::get('training/openregistration','TrainingRegistrationController@index')->name('opentraining');
+Route::get('training/getopenregistration','TrainingRegistrationController@getTrainingsForRegistration')->name('getopenregistration');
+Route::get('training/register/{trainingslug}/{training_id}','TrainingRegistrationController@register')->name('registertraining');
+Route::post('training/register','TrainingRegistrationController@store')->name('registertraining');
+Route::put('training/register','TrainingRegistrationController@update')->name('registertraining');
+
+// print registration
+Route::get('training/printregistration/{id}','TrainingRegistrationController@printregistration')->name('printregistration');

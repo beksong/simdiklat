@@ -1,0 +1,2 @@
+<a href="{{ url('training/printregistration/'.$participant->id) }}" class="badge bg-blue"><i class="fa fa-print"></i> Cetak Bukti Registrasi</a>
+&nbsp;&nbsp;<a href="{{ url('training/register/'.$training->slug.'/'.$training->id) }}" class="badge bg-orange"><i class="fa fa-edit"></i> Update Data Registrasi</a>

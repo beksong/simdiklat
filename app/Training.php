@@ -22,4 +22,9 @@ class Training extends Model
     {
         return $this->hasMany('App\Schedule');
     }
+
+    public function participants()
+    {
+        return $this->hasMany('App\Participant');
+    }
 }

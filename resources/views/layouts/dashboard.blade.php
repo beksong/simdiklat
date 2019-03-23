@@ -76,7 +76,7 @@
                     <a href="#">
                       <div class="pull-left">
                         @if(\Auth::user()->photo!==null)
-                          <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
+                          <img src="{{ storage_path('/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
                         @else
                           <img src="{{ URL::to('/')}}../../dist/img/avatar5.png" class="img-circle" alt="User Image">
                         @endif
@@ -266,7 +266,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(\Auth::user()->photo!=null)
-                <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="user-image" alt="User Image">
+                <img src="{{ storage_path('profile/'.\Auth::user()->photo) }}" class="user-image" alt="User Image">
               @else
                 <!-- <img src="dist/img/avatar5.png" class="user-image" alt="User Image"> -->
               @endif
@@ -276,7 +276,7 @@
               <!-- User image -->
               <li class="user-header">
                 @if(\Auth::user()->photo!=null)
-                  <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
+                  <img src="{{ storage_path('profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
                 @else
                   <!-- <img src="dist/img/avatar5.png" class="img-circle" alt="User Image"> -->
                 @endif
@@ -331,7 +331,7 @@
       <div class="user-panel">
         <div class="pull-left image">
           @if(\Auth::user()->photo!=null)
-            <img src="{{ url('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
+            <img src="{{ storage_path('profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
           @else
             <!-- <img src="dist/img/avatar5.png" class="img-circle" alt="User Image"> -->
           @endif
@@ -356,6 +356,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">User Profile</li>
+        <!-- profile user -->
         <li class="active treeview menu-open">
           <a href="#">
             <i class="fa fa-child"></i> <span>Profile</span>
@@ -365,6 +366,18 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('profile') }}"><i class="fa fa-circle-o"></i> Profile Saya</a></li>
+          </ul>
+        </li>
+        <!-- training info that user can view -->
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-university"></i> <span>Lihat Diklat</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('opentraining') }}"><i class="fa fa-circle-o"></i> Diklat Yang Sedang Dibuka </a></li>
           </ul>
         </li>
         <li class="header">Admin BPSDM Navigation</li>

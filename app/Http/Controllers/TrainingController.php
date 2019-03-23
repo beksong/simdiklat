@@ -68,8 +68,16 @@ class TrainingController extends Controller
     public function edit(TrainingRequest $request)
     {
         $training = Training::find($request->get('training_id'));
-        $start_date= Carbon::parse($training->start_date);
+        $start_date= Carbon::parse($request->get('start_date'));
+        //check weekend
+        if($start_date->isWeekend()){
+            return redirect()->back()->with('message','Hari Minggu tidak bisa dipilih sebagai hari pertama diklat');
+        }
         $isHoliday = new TanggalMerah();
+        $isHoliday->set_date($start_date);
+        if($isHoliday->is_holiday()){
+            return redirect()->back()->with('message','Hari Libur Nasional tidak bisa dipilih sebagai hari pertama diklat');
+        }
         // loop mencari libur nasional dari period
         for ($i=0; $i < $request->get('period') ; $i++) {
             $end_date=$start_date->addDays(1);
@@ -87,7 +95,7 @@ class TrainingController extends Controller
             'name' => $request->get('name'),
             'slug' => str_slug($request->get('name')),
             'period' => $request->get('period'),
-            // 'start_date' => $request->get('start_date'), we are not going update this one
+            'start_date' => $request->get('start_date'), //we are not going update this one
             'description' => $request->get('description'),
             // 'pic_id' => $pic[0]->id, we are not going update the pic on update
             'end_date' => $end_date

@@ -62,4 +62,10 @@ class HomeController extends Controller
         return redirect()->back()->with('message','Berhasil merubah profile anda');
     }
 
+    public function getprofilepicture($picture)
+    {
+        $picture = Storage::url($picture);
+        return $picture;
+    }
+
 }

@@ -8,6 +8,11 @@ use DataTables;
 
 class SpeakerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         return view('speaker.index');

@@ -1,0 +1,1 @@
+<a href="{{ url('training/register/'.$training->slug.'/'.$training->id) }}" class="badge bg-green" ><i class="fa fa-edit"></i> Daftar Sekarang</a>

@@ -128,7 +128,7 @@
     </div>
 </section>
 <!-- edit training -->
-<div class="modal modal-warning fade" tabindex=”-1″ id="edit_training" role="dialog" aria-labelledby="modalLabel" style="overflow:hidden">
+<div class="modal modal-warning fade"  id="edit_training" role="dialog" aria-labelledby="modalLabel"  style="overflow-x: auto;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -166,7 +166,7 @@
                     <div class="box-body">
                         <div class="form-group has-feedback">
                             <label for="start_date" class="control-label">Tanggal Mulai</label>
-                            <input type="text" class="form-control" id="datepicker" name="start_date" readonly="true">
+                            <input type="text" class="form-control" id="datepicker" name="start_date" data-date-format="yyyy-mm-dd">
                             <span class="fa fa-calendar form-control-feedback"></span>
                             @if($errors->has('start_date'))
                                 <span id="helpBlock3" class="help-block"><strong>{{ $errors->first('start_date') }}</strong></span> 
@@ -268,7 +268,14 @@
         modal.find('.modal-body #period').val(link.data('period'));
         modal.find('.modal-body #description').val(link.data('description'));
         modal.find('.modal-body #training_id').val(link.data('training'));
-        modal.find('.modal-body #datepicker').val(link.data('start_date'));       
+        modal.find('.modal-body #datepicker').val(link.data('start_date'));
+        modal.find('.modal-body #datepicker').datepicker({
+            autoclose: 1,
+            forceParse: 0,
+        })
+        .on('show',function(evt){
+            return false;
+        });
     });
 
     $('#del_training').on('show.bs.modal',function(e){
