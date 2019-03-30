@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Training;
 use App\Detailschedule;
+use App\Masterschedule;
 use DataTables;
 use Carbon\Carbon;
 use Grei\TanggalMerah;
-use App\MasterSchedule;
 use App\Http\Requests\MasterScheduleRequest;
 use App\Http\Requests\ScheduleRequest;
 use PDF;
@@ -199,10 +199,12 @@ class ScheduleController extends Controller
      */
     public function printdetailschedule($type,$mschedule_id)
     {
-        $mschedule = MasterSchedule::where('type',$type)->where('id',$mschedule_id)->firstOrFail();
+        $mschedule = Masterschedule::where('type',$type)->where('id',$mschedule_id)->firstOrFail();
         //return view('report.schedules.detailschedule',compact('mschedule'));
-        $pdf = PDF::loadView('report.schedules.detailschedule',compact('mschedule'))->setPaper('a4')->setOrientation('landscape');
-        return $pdf->download('test.pdf');    
+        $pdf = PDF::loadView('report.schedules.detailschedule',compact('mschedule'))
+        ->setPaper('a4')
+        ->setOrientation('landscape');
+        return $pdf->download($mschedule->name.'schedule.pdf');    
     }
 
     // ajax datatables for detailschedules

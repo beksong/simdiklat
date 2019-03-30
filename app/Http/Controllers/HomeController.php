@@ -53,6 +53,7 @@ class HomeController extends Controller
             'place_birth' => $req->get('tempat_lahir'),
             'date_birth' => $req->get('tanggal_lahir'),
             'gender' => $req->get('jenis_kelamin'),
+            'address' => $req->get('address'),
             'photo' => $filename
         ]);
         

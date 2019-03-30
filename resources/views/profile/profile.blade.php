@@ -145,6 +145,19 @@
 
                     <div class="box-body">
                         <div class="form-group has-feedback">
+                            <label for="foto" class="col-sm-2 control-label">Alamat</label>
+
+                            <div class="col-sm-10">
+                                <textarea name="address" id="address" cols="30" rows="10" class="form-control">{{$user->address}}</textarea>
+                                @if($errors->has('address'))
+                                    <span id="helpBlock4" class="help-block"><strong>{{ $errors->first('address') }}</strong></span> 
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="form-group has-feedback">
                             <label for="foto" class="col-sm-2 control-label">Foto</label>
 
                             <div class="col-sm-10">

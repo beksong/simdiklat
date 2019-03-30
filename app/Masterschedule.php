@@ -15,6 +15,6 @@ class Masterschedule extends Model
 
     public function detailschedules()
     {
-        return $this->hasMany('App\DetailSchedule');
+        return $this->hasMany('App\Detailschedule');
     }
 }

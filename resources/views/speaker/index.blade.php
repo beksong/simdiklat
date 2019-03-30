@@ -259,8 +259,8 @@
             },
             columns : [
                 { data : null, sortable : false},
-                { data : "user.name",name : 'user'},
-                { data : "subject.name",name : 'subject'},
+                { data : "user.name",name : 'user.name'},
+                { data : "subject.name",name : 'subject.name'},
                 { data : "action",name : "action",orderable : false, searchable : false},
             ],
         });

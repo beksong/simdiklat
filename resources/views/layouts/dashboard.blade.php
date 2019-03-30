@@ -36,8 +36,8 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -76,7 +76,7 @@
                     <a href="#">
                       <div class="pull-left">
                         @if(\Auth::user()->photo!==null)
-                          <img src="{{ storage_path('/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
+                          <img src="{{ asset('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
                         @else
                           <img src="{{ URL::to('/')}}../../dist/img/avatar5.png" class="img-circle" alt="User Image">
                         @endif
@@ -266,7 +266,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               @if(\Auth::user()->photo!=null)
-                <img src="{{ storage_path('profile/'.\Auth::user()->photo) }}" class="user-image" alt="User Image">
+                <img src="{{ asset('storage/profile/'.\Auth::user()->photo) }}" class="user-image" alt="User Image">
               @else
                 <!-- <img src="dist/img/avatar5.png" class="user-image" alt="User Image"> -->
               @endif
@@ -276,7 +276,7 @@
               <!-- User image -->
               <li class="user-header">
                 @if(\Auth::user()->photo!=null)
-                  <img src="{{ storage_path('profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
+                  <img src="{{ asset('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
                 @else
                   <!-- <img src="dist/img/avatar5.png" class="img-circle" alt="User Image"> -->
                 @endif
@@ -331,7 +331,7 @@
       <div class="user-panel">
         <div class="pull-left image">
           @if(\Auth::user()->photo!=null)
-            <img src="{{ storage_path('profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
+            <img src="{{ asset('storage/profile/'.\Auth::user()->photo) }}" class="img-circle" alt="User Image">
           @else
             <!-- <img src="dist/img/avatar5.png" class="img-circle" alt="User Image"> -->
           @endif
@@ -365,7 +365,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('profile') }}"><i class="fa fa-circle-o"></i> Profile Saya</a></li>
+            <li><a href="{{ route('profile') }}"><i class="fa fa-circle-o text-red"></i> Profile Saya</a></li>
           </ul>
         </li>
         <!-- training info that user can view -->
@@ -378,6 +378,8 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('opentraining') }}"><i class="fa fa-circle-o"></i> Diklat Yang Sedang Dibuka </a></li>
+            <li><a href="{{ route('asparticipant') }}"><i class="fa fa-circle-o"></i> Diklat yang saya ikuti </a></li>
+            <li><a href="{{ route('participant-history') }}"><i class="fa fa-circle-o"></i> History Diklat Saya </a></li>
           </ul>
         </li>
         <li class="header">Admin BPSDM Navigation</li>
@@ -385,157 +387,35 @@
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>Management Diklat</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">5</span>
-            </span>
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('matadiklat') }}"><i class="fa fa-circle-o"></i> Mata Diklat</a></li>
             <li><a href="{{ route('speakers') }}"><i class="fa fa-circle-o"></i> Speakers/Widyaiswara</a></li>
             <li><a href="{{ route('trainings') }}"><i class="fa fa-circle-o"></i> Buat Diklat</a></li>
-            <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Peserta Diklat</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-calendar"></i> <span>Buat Jadwal Diklat</span>
-            <ul class="treeview-menu">
-              <li><a href="{{ route('schedules') }}"><i class="fa fa-circle-o"></i> Buat Jadwal Kegiatan</a></li>
-            </ul>
-          </a>
-        </li>
-        <li>
-          <a href="pages/widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="fa fa-users"></i>
+            <span>Management Peserta</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-blue"></i>Diklat yang sedang dibuka</a></li>
           </ul>
         </li>
+        <li class="header">Menu Widyaiswara</li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <i class="fa fa-user-secret"></i>
+            <span>Widyaiswara / Speakers</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-            <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-            <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-            <li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-            <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-blue"></i>Jadwal Saya</a></li>
           </ul>
         </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-            <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Tables</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-            <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="pages/mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Examples</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li>
-        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
         <li class="header">Master Data</li>
         <li><a href="{{ route('lembaga') }}"><i class="fa fa-h-square text-red"></i> <span>Lembaga</span></a></li>
         <li><a href="{{ route('pic') }}"><i class="fa fa-circle-o text-yellow"></i> <span>PIC</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

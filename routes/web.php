@@ -65,9 +65,29 @@ Route::get('trainings','TrainingController@index')->name('trainings');
 Route::post('trainings','TrainingController@store')->name('trainings');
 Route::put('trainings','TrainingController@edit')->name('trainings');
 Route::delete('trainings','TrainingController@destroy')->name('trainings');
+// training route for admin to get all participants start here
+Route::get('traininglist','TrainingController@traininglist')->name('trainingslist');
+// admin get all registered participant
+Route::get('training/showparticipants/{training_id}','TrainingController@showparticipants')->name('showparticipants');
+// ajax datatables for admin to get all opened trainings
+Route::get('getregisteredparticipants','TrainingController@getregisteredparticipants')->name('getregisteredparticipants');
+// ajax datatables for admin to get all regsitered participants
+Route::get('getalreadyregisteredparticipants','TrainingController@getalreadyregisteredparticipants')->name('getalreadyregisteredparticipants');
 // ajax datatables trainings
 Route::get('gettrainings','TrainingController@getTrainings')->name('gettrainings');
-
+// ajax request when user type training name on select2
+Route::get('gettraininglist','TrainingController@gettraininglist')->name('gettraininglist');
+/**
+ * here is where admin wanna enrole or giving role a participant to custom training
+ * update participant from one training to others
+ * or delete participant from training that he/she has been register
+ */
+Route::put('training/updateparticipantbyadmin','TrainingController@updateparticipantbyadmin')->name('updateparticipantbyadmin');
+Route::delete('training/deleteparticipantbyadmin','TrainingController@deleteparticipantbyadmin')->name('deleteparticipantbyadmin');
+/**
+ * here is admin print participant and create absent on pdf
+ */
+Route::get('training/printparticipants/{training_id}','TrainingController@printparticipantsbyadmin')->name('printparticipantsbyadmin');
 // schedules masters
 Route::get('schedules','ScheduleController@index')->name('schedules');
 Route::get('schedules/{id}','ScheduleController@getScheduleByTrainingId')->name('getschedulebytrainingid');
@@ -95,5 +115,11 @@ Route::get('training/register/{trainingslug}/{training_id}','TrainingRegistratio
 Route::post('training/register','TrainingRegistrationController@store')->name('registertraining');
 Route::put('training/register','TrainingRegistrationController@update')->name('registertraining');
 
+// training that users as participant
+Route::get('training/asparticipant','TrainingRegistrationController@asparticipant')->name('asparticipant');
+// history of participant
+Route::get('participant-history','TrainingRegistrationController@participanthistory')->name('participant-history');
+// ajax datatables to get history training of participant
+Route::get('getparticipanthistory','TrainingRegistrationController@getparticipanthistory')->name('getparticipanthistory');
 // print registration
 Route::get('training/printregistration/{id}','TrainingRegistrationController@printregistration')->name('printregistration');

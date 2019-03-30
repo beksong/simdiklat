@@ -235,11 +235,11 @@
             processing: true,
             serverSide: true,
             paging      : true,
-            lengthChange: true,
+            lengthChange: false,
             searching   : true,
             ordering    : true,
             info        : true,
-            autoWidth   : true,
+            autoWidth   : false,
             ajax : {
                 url : '{!! route('gettrainings') !!}',
                 dataType : 'json'

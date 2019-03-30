@@ -6,7 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Participant extends Model
 {
-    protected $fillable = ['user_id','training_id','fullname','frontdegree','backdegree','rank','position','institution','propername','properdocs','properslug','properabstract'];
+    protected $fillable = [
+        'user_id',
+        'training_id',
+        'fullname',
+        'phone',
+        'frontdegree',
+        'backdegree',
+        'rank',
+        'position',
+        'institution',
+        'institution_address',
+        'institution_phone',
+        'propername',
+        'properdocs',
+        'properslug',
+        'properabstract'
+    ];
+
     public function training()
     {
         return $this->belongsTo('App\Training');

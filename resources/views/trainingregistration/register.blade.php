@@ -155,6 +155,46 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="box-body">
+                            <div class="form-group has-feedback">
+                                <label for="institution_address" class="col-sm-3 control-label">Alamat Kantor / Unit Kerja</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="institution_address" name="institution_address" class="form-control pull-right {{ $errors->has('institution_address') ? ' is-invalid' : '' }}" value ="{{ $participant!=null ? $participant->institution_address : ''}}" aria-describedby="helpBlock6" placeholder="Isikan dengan alamat kantor anda saat ini,,, ex : Jl. S. Parman No. 67" required>
+                                    <span class="form-control-feedback"></span>
+                                    @if($errors->has('institution_address'))
+                                        <span id="helpBlock7" class="help-block"><strong>{{ $errors->first('institution_address') }}</strong></span> 
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group has-feedback">
+                                <label for="phone" class="col-sm-3 control-label">Nomor Telepon / Hp</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="phone" name="phone" class="form-control pull-right {{ $errors->has('phone') ? ' is-invalid' : '' }}" value ="{{ $participant!=null ? $participant->phone : ''}}" aria-describedby="helpBlock8" placeholder="Isikan dengan nomor telepon/HP anda... ex : 082193xxxxxx" required>
+                                    <span class="form-control-feedback"></span>
+                                    @if($errors->has('phone'))
+                                        <span id="helpBlock8" class="help-block"><strong>{{ $errors->first('phone') }}</strong></span> 
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group has-feedback">
+                                <label for="institution_phone" class="col-sm-3 control-label">Nomor Telepon Kantor</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="institution_phone" name="institution_phone" class="form-control pull-right {{ $errors->has('institution_phone') ? ' is-invalid' : '' }}" value ="{{ $participant!=null ? $participant->institution_phone : ''}}" aria-describedby="helpBlock9" placeholder="Isikan dengan nomor telepon kantor anda ex : (0451) 426xxx" required>
+                                    <span class="form-control-feedback"></span>
+                                    @if($errors->has('institution_phone'))
+                                        <span id="helpBlock9" class="help-block"><strong>{{ $errors->first('institution_phone') }}</strong></span> 
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="box-footer">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9">

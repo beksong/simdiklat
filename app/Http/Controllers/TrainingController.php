@@ -9,6 +9,8 @@ use App\Pic;
 use DataTables;
 use Carbon\Carbon;
 use Grei\TanggalMerah;
+use App\Participant;
+use PDF;
 
 class TrainingController extends Controller
 {
@@ -116,7 +118,7 @@ class TrainingController extends Controller
     {
         $trainings=Training::with(['Pic'=>function($query){
             $query->with('Institution')->get();
-        }])->get();
+        }])->orderBy('start_date','asc')->get();
         return DataTables::of($trainings)
         ->addColumn('schedule',function($training){
             return view('training.tbschedule',compact('training'));
@@ -124,5 +126,81 @@ class TrainingController extends Controller
         ->addColumn('action',function($training){
             return view('training.tbbutton',compact('training'));
         })->rawColumns(['schedule','action'])->toJson();
+    }
+
+    public function traininglist()
+    {
+        return view('training.opentraining.index');
+    }
+
+    public function getregisteredparticipants(Request $request)
+    {
+        $trainings = Training::with(['Pic'=>function($query){
+            $query->with('Institution');
+        }])->where('start_date','>',Carbon::now())->orWhere('end_date','>',Carbon::now())->orderBy('start_date','asc')->get();
+        return DataTables::of($trainings)
+        ->addColumn('participant',function($training){
+            return view('training.opentraining.tbbutton',compact('training'));
+        })->rawColumns(['participant'])->toJson();
+    }
+
+    // admin get registered participants
+    public function showparticipants($training_id)
+    {
+        $training = Training::find($training_id);
+        return view('training.opentraining.showparticipants',compact('training'));
+    }
+
+    // get allready registered participant for admin datatables
+    public function getalreadyregisteredparticipants(Request $request)
+    {
+        $participants = Participant::with('user')->where('training_id',$request->get('q'))->get();
+        return DataTables::of($participants)
+        ->addColumn('action',function($participant){
+            return view('training.opentraining.tbbuttonparticipant',compact('participant'));
+        })->toJson();
+    }
+
+    // get trainings list for admin select2
+    public function gettraininglist(Request $request)
+    {
+        $data = trim($request->get('q'));
+        $trainings = Training::where('name','like',"%{$data}%")->get();
+        return json_decode($trainings);
+    }
+
+    /**
+     * here is where admin wanna enrole or giving role a participant to custom training
+     * update participant from one training to others
+     */
+    public function updateparticipantbyadmin(Request $request)
+    {
+        $p = Participant::find($request->get('participant_id'));
+
+        $p->update([
+            'training_id' => $request->get('training_id')
+        ]);
+
+        return redirect()->back()->with('message','Berhasil merubah data');
+    }
+
+    public function deleteparticipantbyadmin(Request $request)
+    {
+        $p=Participant::find($request->get('participant_id'));
+        $p->delete();
+        return redirect()->back()->with('message','Berhasil menghapus data');
+    }
+
+    /**
+     * here is admin print participant and create absent
+     */
+    public function printparticipantsbyadmin($training_id)
+    {
+        $training=Training::find($training_id);
+        $participants = Participant::where('training_id',$training_id)->get();
+        $pdf = PDF::loadView('report.training.participant-absen',compact('participants','training'));
+        $pdf->setOrientation('portrait');
+        return $pdf->download('absen.pdf');
+        // return view('report.training.participant-absen',compact('participants','training'));
     }
 }

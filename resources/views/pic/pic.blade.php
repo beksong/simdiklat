@@ -91,8 +91,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Lembaga</th>
                                 <th>Nama PIC</th>
+                                <th>Nama Lembaga</th>
                                 <th>action</th>
                             </tr>
                         </thead>

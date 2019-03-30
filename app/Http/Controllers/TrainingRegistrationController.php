@@ -25,7 +25,7 @@ class TrainingRegistrationController extends Controller
     public function getTrainingsForRegistration()
     {
         $now = Carbon::now();
-        $trainings = Training::where('start_date','>',$now)->get();
+        $trainings = Training::where('start_date','>',$now)->orderBy('start_date','asc')->get();
         return DataTables::of($trainings)
         ->addColumn('action',function($training){
             // here is many participants
@@ -56,13 +56,16 @@ class TrainingRegistrationController extends Controller
     {
         $participant = new Participant(array(
             'user_id' => \Auth::user()->id,
+            'phone' => $request->get('phone'),
             'training_id' => $request->get('training_id'),
             'frontdegree' => $request->get('frontdegree'),
             'backdegree' => $request->get('backdegree'),
             'fullname' => $request->get('fullname'),
             'rank' => $request->get('rank'), //pangkat,golru
             'position' => $request->get('position'),//jabatan
-            'institution' => $request->get('institution') //institusi asal
+            'institution' => $request->get('institution'), //institusi asal
+            'institution_address' => $request->get('institution_address'),
+            'institution_phone' => $request->get('institution_phone'),
         ));
 
         $participant->save();
@@ -73,13 +76,16 @@ class TrainingRegistrationController extends Controller
     {
         $participant = Participant::where('user_id',\Auth::user()->id)->firstOrFail();
         $participant->update([
+            'phone' => $request->get('phone'),
             'training_id' => $request->get('training_id'),
             'frontdegree' => $request->get('frontdegree'),
             'backdegree' => $request->get('backdegree'),
             'fullname' => $request->get('fullname'),
             'rank' => $request->get('rank'), //pangkat,golru
             'position' => $request->get('position'),//jabatan
-            'institution' => $request->get('institution') //institusi asal
+            'institution' => $request->get('institution'), //institusi asal
+            'institution_address' => $request->get('institution_address'),
+            'institution_phone' => $request->get('institution_phone'),
         ]);
         return redirect('training/openregistration')->with('message','Berhasil merubah data');
     }
@@ -88,5 +94,27 @@ class TrainingRegistrationController extends Controller
     {
         $participant = Participant::find($id);
         return view('report.registration.registration',compact('participant'));
+    }
+
+    // user as participant in training and training
+    public function asparticipant()
+    {
+        $participant = Participant::with(['training' => function($query){
+            $query->where('end_date','>',Carbon::now());
+        }])->where('user_id',\Auth::user()->id)->firstOrFail();
+        return view('trainingregistration.asparticipant',compact('participant'));
+    }
+
+    public function participanthistory()
+    {
+        return view('traininghistory.index');
+    }
+
+    public function getparticipanthistory()
+    {
+        $history = Training::with(['participants'=>function($query){
+            $query->where('user_id',\Auth::user()->id);
+        }])->where('end_date','<',Carbon::now())->get();
+        return DataTables::of($history)->make(true);
     }
 }
