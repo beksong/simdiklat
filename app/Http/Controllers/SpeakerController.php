@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Speaker;
+use App\Detailschedule;
 use DataTables;
+use Carbon\Carbon;
 
 class SpeakerController extends Controller
 {
@@ -77,4 +79,22 @@ class SpeakerController extends Controller
         $speaker = Speaker::with('subject')->where('user_id',$req->get('q'))->get();
         return json_decode($speaker);
     }
+
+    /**
+     * speaker when wanna see the schedule or upload documents of subject
+     */
+
+     public function getmyschedule()
+     {
+         return view('speakergetschedule.index');
+     }
+
+     public function getmyscheduledetails()
+     {
+         $user = \Auth::user();
+         $details = Detailschedule::with(['masterschedule'=>function($query){
+             $query->with('training');
+         },'subject'])->where('user_id',$user->id)->where('dateschedule','>',Carbon::now())->orderBy('dateschedule','asc')->get();
+         return DataTables::of($details)->toJson();
+     }
 }

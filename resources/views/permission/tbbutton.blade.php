@@ -1,0 +1,2 @@
+<a href="#edit_permission" class="badge bg-yellow" data-toggle="modal" data-permission_id="{{$permission->id}}" data-permission_name="{{ $permission->name }}" data-permission_display_name="{{ $permission->display_name }}" data-permission_description="{{ $permission->description }}"><i class="fa fa-pencil"></i></a>
+&nbsp;&nbsp;<a href="#del_permission" data-permission="{{ $permission->id }}" class="badge bg-red" data-toggle="modal"><i class="fa fa-trash"></i></a>

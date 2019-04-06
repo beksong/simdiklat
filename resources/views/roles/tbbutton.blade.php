@@ -1,0 +1,2 @@
+<a href="#edit_role" class="badge bg-yellow" data-toggle="modal" data-role_id="{{$role->id}}" data-role_name="{{ $role->name }}" data-role_display_name="{{ $role->display_name }}" data-role_description="{{ $role->description }}"><i class="fa fa-pencil"></i></a>
+&nbsp;&nbsp;<a href="#del_role" data-role="{{ $role->id }}" class="badge bg-red" data-toggle="modal"><i class="fa fa-trash"></i></a>

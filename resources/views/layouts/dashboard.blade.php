@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ asset('Ionicons/css/ionicons.min.css') }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="{{ asset('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
   <!-- bootstrap daterangepicker -->
@@ -410,12 +411,18 @@
             <span>Widyaiswara / Speakers</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-blue"></i>Jadwal Saya</a></li>
+            <li><a href="{{ route('myschedule') }}"><i class="fa fa-circle-o text-blue"></i>Jadwal Saya</a></li>
           </ul>
         </li>
         <li class="header">Master Data</li>
         <li><a href="{{ route('lembaga') }}"><i class="fa fa-h-square text-red"></i> <span>Lembaga</span></a></li>
         <li><a href="{{ route('pic') }}"><i class="fa fa-circle-o text-yellow"></i> <span>PIC</span></a></li>
+        <li class="header">Superadmin</li>
+        <li><a href="{{ route('users') }}"><i class="fa fa-users text-red"></i> <span>Users</span></a></li>
+        <li><a href="{{ route('roles') }}"><i class="fa fa- fa-map-signs text-red"></i> <span>roles</span></a></li>
+        <li><a href="{{ route('permissions') }}"><i class="fa fa- fa-key text-red"></i> <span>permissions</span></a></li>
+        <li><a href="{{ route('permissionroles') }}"><i class="fa fa- fa-cog text-red"></i> <span>Role Permissions</span></a></li>
+        <li><a href="{{ route('permissionroles') }}"><i class="fa fa- fa-cog text-red"></i> <span>User Roles</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -639,6 +646,7 @@
 <!-- DataTables -->
 <script src="{{ asset('datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <!-- bootstrap datepicker -->
 <script src="{{ asset('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <!-- bootstrap daterangepicker -->

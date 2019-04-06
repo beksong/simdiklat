@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectsTableSeeder::class);
         $this->call(SpeakersTableSeeder::class);
         $this->call(TrainingsTableSeeder::class);
+        $this->call(LaratrustSeeder::class);
     }
 }

@@ -19,6 +19,30 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+/**
+ * superadmin controller handle everything start here
+ * lets Rock !!!!
+ */
+Route::get('users','SuperadminController@index')->name('users');
+Route::get('getusers','SuperadminController@getusers')->name('getusers');
+Route::delete('user','SuperadminController@destroy')->name('user');
+// roles
+Route::get('roles','SuperadminController@roles')->name('roles');
+Route::get('getroles','SuperadminController@getroles')->name('getroles');
+Route::delete('role','SuperadminController@delete_role')->name('role');
+Route::post('role','SuperadminController@store_role')->name('role');
+Route::put('role','SuperadminController@update_role')->name('role');
+//permissions
+Route::get('permissions','SuperadminController@permissions')->name('permissions');
+Route::get('getpermissions','SuperadminController@getpermissions')->name('getpermissions');
+Route::post('permission','SuperadminController@store_permission')->name('permission');
+Route::put('permission','SuperadminController@update_permission')->name('permission');
+Route::delete('permission','SuperadminController@delete_permission')->name('permission');
+// permissionroles
+Route::get('permissionroles','SuperadminController@permission_roles')->name('permissionroles');
+Route::get('getpermissionroles','SuperadminController@getpermissionroles')->name('getpermissionroles');
+
+// profile
 Route::get('profile','HomeController@profile')->name('profile');
 Route::post('profile','HomeController@update')->name('updateprofile');
 
@@ -60,10 +84,14 @@ Route::get('getspeakers','SpeakerController@getSpeakers')->name('getspeakers');
 // ajax request on selected user_id in schedule
 Route::get('getspeaker','SpeakerController@getSubjectById')->name('getsubjectbyid');
 
+// Route for speakers when they wanna upload documents or see the schedule
+Route::get('myschedule','SpeakerController@getmyschedule')->name('myschedule');
+Route::get('getmyscheduledetails','SpeakerController@getmyscheduledetails')->name('getmyscheduledetails');
+
 //trainings
 Route::get('trainings','TrainingController@index')->name('trainings');
 Route::post('trainings','TrainingController@store')->name('trainings');
-Route::put('trainings','TrainingController@edit')->name('trainings');
+Route::put('updatetrainings','TrainingController@edit')->name('trainings');
 Route::delete('trainings','TrainingController@destroy')->name('trainings');
 // training route for admin to get all participants start here
 Route::get('traininglist','TrainingController@traininglist')->name('trainingslist');

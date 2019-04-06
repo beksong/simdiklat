@@ -32,9 +32,11 @@ class TrainingController extends Controller
         if($start_date->isWeekend()){
             return redirect()->back()->with('message','Hari Minggu tidak bisa dipilih sebagai hari pertama diklat');
         }
+        
         $isHoliday = new TanggalMerah();
         //check tanggal merah nasional 
         $isHoliday->set_date($start_date);
+
         if($isHoliday->is_holiday()){
             return redirect()->back()->with('message','Hari Libur Nasional tidak bisa dipilih sebagai hari pertama diklat');
         }
@@ -62,7 +64,7 @@ class TrainingController extends Controller
             'pic_id' => $pic[0]->id,
             'end_date' => $end_date
         ));
-
+        
         $training->save();
         return redirect()->back()->with('message','Data telah disimpan');
     }

@@ -1,0 +1,1 @@
+&nbsp;&nbsp;<a href="#del_user" data-user="{{ $user->id }}" class="badge bg-red" data-toggle="modal"><i class="fa fa-trash"></i></a>

@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use Notifiable;
 
     /**
@@ -46,5 +48,10 @@ class User extends Authenticatable
     public function participants()
     {
         return $this->hasMany('App\Participant');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
     }
 }
