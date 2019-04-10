@@ -202,7 +202,7 @@ class TrainingController extends Controller
         $participants = Participant::where('training_id',$training_id)->get();
         $pdf = PDF::loadView('report.training.participant-absen',compact('participants','training'));
         $pdf->setOrientation('portrait');
-        return $pdf->download('absen.pdf');
-        // return view('report.training.participant-absen',compact('participants','training'));
+        //return $pdf->download('absen.pdf');
+        return view('report.training.participant-absen',compact('participants','training'));
     }
 }

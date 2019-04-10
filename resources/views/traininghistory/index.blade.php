@@ -51,6 +51,7 @@
                                 <td>Nama Diklat</td>
                                 <td>Tanggal Mulai</td>
                                 <td>Tanggal Selesai</td>
+                                <td>Judul Proyek Perubahan</td>
                                 <td>Abstract Proyek Perubahan</td>
                                 <td>Proyek Perubahan</td>
                             </tr>
@@ -84,11 +85,12 @@ $(document).ready(function(){
         },
         columns : [
             { data : null, sortable : false},
-            { data : "name",name : 'name'},
-            { data : "start_date",name : 'start_date'},
-            { data : "end_date",name : 'end_date'},
-            { data : "proper_abstract",name : 'proper_abstract'},
-            { data : "proper_name",name : 'proper_name'},
+            { data : "training.name",name : 'training.name'},
+            { data : "starting_date",name : 'starting_date'},
+            { data : "enddate",name : 'enddate'},
+            { data : "propername",name : 'propername'},
+            { data : "docsfile",name : 'docsfile'},
+            { data : "abstractfile",name : 'abstractfile'}
         ],
     });
 });

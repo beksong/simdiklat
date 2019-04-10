@@ -41,7 +41,13 @@ Route::delete('permission','SuperadminController@delete_permission')->name('perm
 // permissionroles
 Route::get('permissionroles','SuperadminController@permission_roles')->name('permissionroles');
 Route::get('getpermissionroles','SuperadminController@getpermissionroles')->name('getpermissionroles');
-
+Route::get('syncpermissionrole/{role_id}','SuperadminController@showfromsyncpermissionrole')->name('syncpermissionrole');
+Route::post('syncpermissionrole','SuperadminController@syncpermissionrole')->name('syncpermissionrole');
+// roleusers
+Route::get('roleusers','SuperadminController@role_users')->name('roleusers');
+Route::get('getuserroles','SuperadminController@getuserroles')->name('getuserroles');
+Route::get('syncroleuser/{user_id}','SuperadminController@showformsyncroleuser')->name('syncroleuser');
+Route::post('syncroleuser','SuperadminController@syncroleuser')->name('syncroleuser');
 // profile
 Route::get('profile','HomeController@profile')->name('profile');
 Route::post('profile','HomeController@update')->name('updateprofile');
@@ -145,9 +151,11 @@ Route::put('training/register','TrainingRegistrationController@update')->name('r
 
 // training that users as participant
 Route::get('training/asparticipant','TrainingRegistrationController@asparticipant')->name('asparticipant');
+Route::post('training/participantproper','TrainingRegistrationController@participantproper')->name('participantproper');
 // history of participant
 Route::get('participant-history','TrainingRegistrationController@participanthistory')->name('participant-history');
 // ajax datatables to get history training of participant
 Route::get('getparticipanthistory','TrainingRegistrationController@getparticipanthistory')->name('getparticipanthistory');
 // print registration
 Route::get('training/printregistration/{id}','TrainingRegistrationController@printregistration')->name('printregistration');
+

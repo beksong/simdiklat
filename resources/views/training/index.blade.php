@@ -137,13 +137,13 @@
             <h4 class="modal-title" id="modalLabel">Update data diklat</h4>
             </div>
             <div class="modal-body">
-            <form action="{{ route('trainings') }}" method="post">
+            <form action="{{ url('updatetrainings') }}" method="post">
                     @csrf
                     {{ method_field('PUT')}}
                     <input type="hidden" id="training_id" name="training_id">
                     <div class="box-body">
                         <div class="form-group has-feedback">
-                            <label for="name" class="control-label">Nama diklat</label>
+                            <label for="name" class="control-label">Nama Diklat</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="input nama diklat ex. diklat prajabatan,diklat kepemimpinan tingkat IV.." required autofocus>
                             <span class="fa fa-file-o form-control-feedback"></span>
                             @if($errors->has('name'))
@@ -235,11 +235,11 @@
             processing: true,
             serverSide: true,
             paging      : true,
-            lengthChange: false,
+            lengthChange: true,
             searching   : true,
             ordering    : true,
             info        : true,
-            autoWidth   : false,
+            autoWidth   : true,
             ajax : {
                 url : '{!! route('gettrainings') !!}',
                 dataType : 'json'

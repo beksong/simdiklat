@@ -39,11 +39,67 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="info-box bg-yellow">
-                <span class="info-box-icon"> <a href=""><i class="ion ion-ios-pricetag-outline"></i></a></span>
+                <span class="info-box-icon"> <i class="ion ion-ios-pricetag-outline"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Diklat yang sedang saya ikuti</span>
                     <span class="info-box-number">{{ $participant->training->name }} </span>
-                    <span class="info-box-text"> Tanggal Mulai : {{ $participant->training->start_date }} || Tanggal Selesai : {{$participant->training->end_date }}</span>
+                    <span class="info-box-text"> Tanggal Mulai : {{ \Carbon\Carbon::parse($participant->training->start_date)->format('d-m-Y') }} || Tanggal Selesai : {{ \Carbon\Carbon::parse($participant->training->end_date)->format('d-m-Y') }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- form proyek perubahan -->
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Upload Proyek Perubahan / Laporan Aktualisasi</h3>
+                    <h4 class="box-title">{{ $participant->training->name }}</h4>
+                </div>
+                <div class="box-body">
+                    <form action="{{ route('participantproper') }}" role="form"  method="post" class="form-horizontal" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="participant_id" id="participant_id" value="{{ $participant->id }}">
+                        <div class="form-group has-feedback">
+                            <label for="propername" class="col-sm-3 control-label">Judul Proyek Perubahan</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="propername" name="propername" class="form-control{{ $errors->has('propername') ? ' is-invalid' : '' }}" aria-describedby="helpBlock1" placeholder="Judul Proyek Perubahan" value="{{ $participant->propername }}" required>
+                                <span class="fa fa-file-o form-control-feedback"></span>
+                                @if($errors->has('propername'))
+                                    <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('propername') }}</strong></span> 
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <label for="properabstract" class="col-sm-3 control-label">Upload Abstrak File/Softcopy Proyek Perubahan</label>
+                            <div class="col-sm-9">
+                                <input type="file" id="properabstract" name="properabstract" accept="application/pdf">
+                                <p>{{ $participant->properabstract }}</p>
+                                <span class="fa fa-file-o form-control-feedback"></span>
+                                @if($errors->has('properabstract'))
+                                    <span id="helpBlock2" class="help-block"><strong>{{ $errors->first('properabstract') }}</strong></span> 
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <label for="properdocs" class="col-sm-3 control-label">Upload Softcopy Proyek Perubahan</label>
+                            <div class="col-sm-9">
+                                <input type="file" id="properdocs" name="properdocs" accept="application/pdf">
+                                <p>{{ $participant->properdocs }}</p>
+                                <span class="fa fa-file-o form-control-feedback"></span>
+                                @if($errors->has('properdocs'))
+                                    <span id="helpBlock2" class="help-block"><strong>{{ $errors->first('properdocs') }}</strong></span> 
+                                @endif
+                            </div>
+                        </div>
+                    
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary"> <i class="fa fa-send"></i> Simpan</button>
+                    </form>
                 </div>
             </div>
         </div>

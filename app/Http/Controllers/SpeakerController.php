@@ -94,7 +94,10 @@ class SpeakerController extends Controller
          $user = \Auth::user();
          $details = Detailschedule::with(['masterschedule'=>function($query){
              $query->with('training');
-         },'subject'])->where('user_id',$user->id)->where('dateschedule','>',Carbon::now())->orderBy('dateschedule','asc')->get();
-         return DataTables::of($details)->toJson();
+         },'subject'])->where('user_id',$user->id)->where('dateschedule','>=',Carbon::now())->orderBy('dateschedule','asc')->get();
+         return DataTables::of($details)
+         ->addColumn('datescheduleformat',function($detail){
+             return Carbon::parse($detail->dateschedule)->format('d-m-Y');
+         })->toJson();
      }
 }

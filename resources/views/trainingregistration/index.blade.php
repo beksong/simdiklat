@@ -84,7 +84,7 @@ $(document).ready(function(){
         columns : [
             { data : null, sortable : false},
             { data : "name",name : 'name'},
-            { data : "start_date",name : 'start_date'},
+            { data : "opendate",name : 'opendate'},
             { data : "action",name : "action",orderable : false, searchable : false},
         ],
     });

@@ -411,7 +411,8 @@
             <span>Widyaiswara / Speakers</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('myschedule') }}"><i class="fa fa-circle-o text-blue"></i>Jadwal Saya</a></li>
+            <li><a href="{{ route('myschedule') }}"><i class="fa fa-calendar-o text-blue"></i>Jadwal Saya</a></li>
+            <li><a href="{{ route('myschedule') }}"><i class="fa fa-folder-o text-blue"></i>Upload Perangkat Mengajar</a></li>
           </ul>
         </li>
         <li class="header">Master Data</li>
@@ -422,7 +423,7 @@
         <li><a href="{{ route('roles') }}"><i class="fa fa- fa-map-signs text-red"></i> <span>roles</span></a></li>
         <li><a href="{{ route('permissions') }}"><i class="fa fa- fa-key text-red"></i> <span>permissions</span></a></li>
         <li><a href="{{ route('permissionroles') }}"><i class="fa fa- fa-cog text-red"></i> <span>Role Permissions</span></a></li>
-        <li><a href="{{ route('permissionroles') }}"><i class="fa fa- fa-cog text-red"></i> <span>User Roles</span></a></li>
+        <li><a href="{{ route('roleusers') }}"><i class="fa fa- fa-cog text-red"></i> <span>User Roles</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -32,6 +32,7 @@
                         <td>Pemateri/Widyaiswara</td>
                         <td>Jam</td>
                         <td>JP</td>
+                        <td>Sesi</td>
                         <td>Keterangan</td>
                     </tr>
                 </thead>
@@ -39,17 +40,25 @@
                     @foreach($mschedule->detailschedules as $key => $schedule )
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $schedule->dateschedule }}</td>
+                            <td>{{ \Carbon\Carbon::parse($schedule->dateschedule)->format('d-m-Y') }}</td>
                             <td>{{ $schedule->subject->name}}</td>
                             <td>{{ $schedule->user->name }}</td>
                             <td>{{ $schedule->timeschedule }}</td>
                             <td>{{ $schedule->jp }}</td>
+                            <td>Sesi Ke-{{ $schedule->sessionschedule }}</td>
                             <td>{{ $schedule->description }}</td>
                         </tr>
-                        @if($key!=3)
+                        @if($schedule->sessionschedule!='4')
                             <tr align="center">
-                                <td colspan="7">
+                                <td colspan="8">
                                     Break
+                                </td>
+                            </tr>
+                        @endif
+                        @if($schedule->sessionschedule=='4')
+                            <tr align="center">
+                                <td colspan="8">
+                                    {{ \Carbon\Carbon::parse($schedule->dateschedule)->format('d-m-Y') }}
                                 </td>
                             </tr>
                         @endif

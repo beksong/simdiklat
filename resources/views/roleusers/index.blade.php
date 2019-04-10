@@ -8,8 +8,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li>Widyaiswara</li>
-        <li class="active">My schedule</li>
+        <li class="active"> Roles - Users </li>
     </ol>
 </section>
 <!-- main content -->
@@ -35,6 +34,18 @@
             </div>
         @endif
     </div>
+    <!-- content -->
+    <div class="row">
+        <!-- left side -->
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Roles Users Lists</h3>
+                    <h4>Here is configuration between roles and users, consult your dev to modify or make any change, b'cause it could affect your apps  </h4>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- table row -->
     <div class="row">
@@ -42,19 +53,16 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Data Jadwal Mengajar {{ \Auth::user()->name }}</h3>
+                    <h3 class="box-title">Roles users relationship table</h3>
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="tb-trainings" class="table table-striped table-bordered">
+                    <table id="tb-roleusers" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Diklat</th>
-                                <th>Nama Materi</th>
-                                <th>Tanggal</th>
-                                <th>Jam</th>
-                                <th>JP</th>
-                                <th>Sesi Ke</th>
+                                <th>Username</th>
+                                <th>Roles</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -63,24 +71,22 @@
         </div>
     </div>
 </section>
-
 @endsection
 
 @push('jscript')
 <script>
-    // datatables
     $(function(){
-        $('#tb-trainings').DataTable({
+        var table = $('#tb-roleusers').DataTable({
             processing: true,
             serverSide: true,
             paging      : true,
-            lengthChange: true,
+            lengthChange: false,
             searching   : true,
             ordering    : true,
             info        : true,
-            autoWidth   : true,
+            autoWidth   : false,
             ajax : {
-                url : '{!! route('getmyscheduledetails') !!}',
+                url : '{!! route('getuserroles') !!}',
                 dataType : 'json'
             },
             fnCreatedRow: function (row, data, index) {
@@ -88,14 +94,32 @@
             },
             columns : [
                 { data : null, sortable : false},
-                { data : "masterschedule.training.name",name : 'masaterschedule.training.name'},
-                { data : "subject.name",name : 'subject.name'},
-                { data : "datescheduleformat",name : 'datescheduleformat'},
-                { data : "timeschedule",name : 'timeschedule'},
-                { data : "jp",name : 'jp'},
-                { data : "sessionschedule",name : 'sessionschedule'}
-                // { data : "schedule",name :"schedule", orderable : false, searchable : false}
-            ],
+                { data : "name",name : 'name'},
+                { data : "roles",name : "roles"},
+                { data : "action",name : "action",orderable : false, searchable : false},
+            ]
+            // buttons: {
+            //     buttons: [
+            //     {
+            //         text: "<i class='fa fa-plus'></i> New Role",
+            //         action: function(e, dt, node, config) {
+            //             $('#add_role').modal('show');
+            //         }
+            //     }],
+            //     dom: {
+            //         button: {
+            //             tag: "button",
+            //             className: "btn btn-success"
+            //         },
+            //         buttonLiner: {
+            //             tag: null
+            //         }
+            //     }
+            // },
+            // dom: 'Bfrtip',
+            // initcomplete : function(){
+            //     buttons().container().appendTo($('#example_wrapper .col-sm-6:eq(0)'));
+            // }
         });
     });
 </script>

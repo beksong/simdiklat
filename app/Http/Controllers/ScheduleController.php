@@ -200,7 +200,7 @@ class ScheduleController extends Controller
     public function printdetailschedule($type,$mschedule_id)
     {
         $mschedule = Masterschedule::where('type',$type)->where('id',$mschedule_id)->firstOrFail();
-        //return view('report.schedules.detailschedule',compact('mschedule'));
+        return view('report.schedules.detailschedule',compact('mschedule'));
         $pdf = PDF::loadView('report.schedules.detailschedule',compact('mschedule'))
         ->setPaper('a4')
         ->setOrientation('landscape');

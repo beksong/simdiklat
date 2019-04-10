@@ -61,6 +61,13 @@ return [
             'url' => env('APP_URL').'/storage/profile',
             'visibility' => 'public',
         ],
+        
+        'proper' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/proper'),
+            'url' => env('APP_URL').'/storage/proper',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

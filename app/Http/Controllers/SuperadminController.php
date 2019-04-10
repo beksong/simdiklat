@@ -169,7 +169,67 @@ class SuperadminController extends Controller
             return $array;
         })
         ->addColumn('action',function($role){
-            return '<a href="" class="badge bg-orange"><i class="fa fa-cog"></i></a>';
+            return '<a href="syncpermissionrole/'.$role->id.'" class="badge bg-orange"><i class="fa fa-cog"></i></a>';
         })->rawColumns(['permission','action'])->toJson();
+    }
+
+    public function showfromsyncpermissionrole($role_id)
+    {
+        $role=Role::find($role_id);
+        $permissions = Permission::all();
+        return view('permissionroles.syncpermissionrole',compact('role','permissions'));
+    }
+
+    public function syncpermissionrole(Request $request)
+    {
+        $role = Role::find($request->get('role_id'));
+        if($request->get('role_name')==''){
+            return redirect()->back()->with('message','Minimal 1 permission');
+        }
+        $role->syncPermissions($request->get('permission_name'));
+        return redirect()->back()->with('message','Berhasil Merubah Data');
+    }
+
+    /**
+     * user role management
+     */
+
+     public function role_users()
+     {
+         return view('roleusers.index');
+     }
+
+    public function getuserroles()
+    {
+        $users = User::all();
+        return DataTables::of($users)
+        ->addColumn('roles',function($user){
+            $roles = $user->roles;
+            $array=array();
+            foreach($roles as $key=>$data){
+                array_push($array,$data->display_name);
+            }
+            return $array;
+        })
+        ->addColumn('action',function($user){
+            return '<a href="syncroleuser/'.$user->id.'" class="badge bg-orange"><i class="fa fa-cog"></i></a>';
+        })->rawColumns(['permission','action'])->toJson();
+    }
+
+    public function showformsyncroleuser($user_id)
+    {
+        $user=User::find($user_id);
+        $roles = Role::all();
+        return view('roleusers.syncroleuser',compact('user','roles'));
+    }
+
+    public function syncroleuser(Request $request)
+    {
+        $user=User::find($request->get('user_id'));
+        if($request->get('role_name')==''){
+            return redirect()->back()->with('message','Minimal 1 role');
+        }
+        $user->syncRoles($request->get('role_name'));
+        return redirect()->back()->with('message','Berhasil Merubah Data');
     }
 }

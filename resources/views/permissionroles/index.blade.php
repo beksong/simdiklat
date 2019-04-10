@@ -71,146 +71,6 @@
         </div>
     </div>
 </section>
-<!-- add_role -->
-<div class="modal modal-success fade" id="add_role" role="dialog" aria-labelledby="modalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="modalLabel">Add new role</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="frm_speaker_modal" action ="">
-                    @csrf
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="name" class="control-label">Role Name</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                            <span class="fa fa-users form-control-feedback"></span>
-                            @if($errors->has('name'))
-                                <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('name') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="display_name" class="control-label">Role Display Name</label>
-
-                            <input type="text" id="display_name" name="display_name" required class="form-control">
-                            <span class="fa fa-file form-control-feedback"></span>
-                            @if($errors->has('display_name'))
-                                <span id="helpBlock2" class="help-block"><strong>{{ $errors->first('display_name') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="description" class="control-label">Role Description</label>
-                            <textarea name="description" id="description" class="form-control" cols="30" rows="5"></textarea>
-                            <span class="fa fa-file form-control-feedback"></span>
-                            @if($errors->has('description'))
-                                <span id="helpBlock3" class="help-block"><strong>{{ $errors->first('description') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-outline"> <i class="fa fa-save"></i> </button>
-            </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- edit_role -->
-<div class="modal modal-warning fade" id="edit_role" role="dialog" aria-labelledby="modalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="modalLabel">Change Role Data</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="frm_speaker_modal" action ="{{ route('role') }}">
-                    @csrf
-                    {{ method_field("PUT") }}
-                    <input type="hidden" id="role_id" name="role_id">
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="name" class="control-label">Role Name</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                            <span class="fa fa-users form-control-feedback"></span>
-                            @if($errors->has('name'))
-                                <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('name') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="display_name" class="control-label">Role Display Name</label>
-
-                            <input type="text" id="display_name" name="display_name" required class="form-control">
-                            <span class="fa fa-file form-control-feedback"></span>
-                            @if($errors->has('display_name'))
-                                <span id="helpBlock2" class="help-block"><strong>{{ $errors->first('display_name') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="box-body">
-                        <div class="form-group has-feedback">
-                            <label for="description" class="control-label">Role Description</label>
-                            <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
-                            <span class="fa fa-file form-control-feedback"></span>
-                            @if($errors->has('description'))
-                                <span id="helpBlock3" class="help-block"><strong>{{ $errors->first('description') }}</strong></span> 
-                            @endif
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-outline"> <i class="fa fa-save"></i> </button>
-            </div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- del_user -->
-<!-- modal delete -->
-<div class="modal modal-danger fade" id="del_role">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Hapus Data</h4>
-            </div>
-            <div class="modal-body">
-            <p>Yakin Akan Menghapus Role?</p>
-            <p>PERHATIAN !! :Menghapus Role akan menghilangkan permission dan role user</p>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-            <form method="post" action="">
-                    @csrf
-                    {{ method_field('DELETE')}}
-                    <input type="hidden" id="role_id" name="role_id">
-                    <button type="submit" class="btn btn-outline"> <i class="fa fa-btn fa-trash"></i> Hapus Data</button>
-            </form>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
 @endsection
 
 @push('jscript')
@@ -237,48 +97,30 @@
                 { data : "name",name : 'name'},
                 { data : "permissions",name : "permissions"},
                 { data : "action",name : "action",orderable : false, searchable : false},
-            ],
-            buttons: {
-                buttons: [
-                {
-                    text: "<i class='fa fa-plus'></i> New Role",
-                    action: function(e, dt, node, config) {
-                        $('#add_role').modal('show');
-                    }
-                }],
-                dom: {
-                    button: {
-                        tag: "button",
-                        className: "btn btn-success"
-                    },
-                    buttonLiner: {
-                        tag: null
-                    }
-                }
-            },
-            dom: 'Bfrtip',
-            initcomplete : function(){
-                buttons().container().appendTo($('#example_wrapper .col-sm-6:eq(0)'));
-            }
+            ]
+            // buttons: {
+            //     buttons: [
+            //     {
+            //         text: "<i class='fa fa-plus'></i> New Role",
+            //         action: function(e, dt, node, config) {
+            //             $('#add_role').modal('show');
+            //         }
+            //     }],
+            //     dom: {
+            //         button: {
+            //             tag: "button",
+            //             className: "btn btn-success"
+            //         },
+            //         buttonLiner: {
+            //             tag: null
+            //         }
+            //     }
+            // },
+            // dom: 'Bfrtip',
+            // initcomplete : function(){
+            //     buttons().container().appendTo($('#example_wrapper .col-sm-6:eq(0)'));
+            // }
         });
     });
-
-    $('#edit_role').on('show.bs.modal',function(e){
-        modal =$(this);
-        link = $(e.relatedTarget);
-
-        modal.find('.modal-body #role_id').val(link.data('role_id'));
-        modal.find('.modal-body #name').val(link.data('role_name'));
-        modal.find('.modal-body #display_name').val(link.data('role_display_name'));
-        modal.find('.modal-body #description').val(link.data('role_description'));
-    });
-
-    $('#del_role').on('show.bs.modal',function(e){
-        modal = $(this);
-        link = $(e.relatedTarget);
-
-        modal.find('.modal-footer #role_id').val(link.data('role'));
-    });
-    
 </script>
 @endpush

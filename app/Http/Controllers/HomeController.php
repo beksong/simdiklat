@@ -42,8 +42,8 @@ class HomeController extends Controller
 
         // check if file exist in storage and delete old file
         $storage=Storage::disk('profile');
-        if($user->foto!==null){
-            $storage->delete($user->foto);
+        if($user->photo!==null){
+            $storage->delete($user->photo);
         }
 
         $user->update([

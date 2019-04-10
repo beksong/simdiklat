@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Training;
 use App\Participant;
 use DataTables;
+use Storage;
 
 use App\Http\Requests\RegisterTrainingRequest;
 
@@ -19,7 +20,7 @@ class TrainingRegistrationController extends Controller
 
     public function index()
     {
-        return view('trainingregistration.index',compact('trainings'));
+        return view('trainingregistration.index');
     }
 
     public function getTrainingsForRegistration()
@@ -40,7 +41,9 @@ class TrainingRegistrationController extends Controller
             }else{
                 return view('trainingregistration.tbbutton',compact('training'));
             }
-        })->toJson();
+        })->addColumn('opendate',function($training){
+            return Carbon::parse($training->start_date)->format('d-m-Y');
+        })->rawColumns(['action','opendate'])->toJson();
     }
 
     // handle participants registration here
@@ -100,7 +103,7 @@ class TrainingRegistrationController extends Controller
     public function asparticipant()
     {
         $participant = Participant::with(['training' => function($query){
-            $query->where('end_date','>',Carbon::now());
+            $query->where('end_date','>',Carbon::now()->addDays(-30));
         }])->where('user_id',\Auth::user()->id)->firstOrFail();
         return view('trainingregistration.asparticipant',compact('participant'));
     }
@@ -112,9 +115,63 @@ class TrainingRegistrationController extends Controller
 
     public function getparticipanthistory()
     {
-        $history = Training::with(['participants'=>function($query){
-            $query->where('user_id',\Auth::user()->id);
-        }])->where('end_date','<',Carbon::now())->get();
-        return DataTables::of($history)->make(true);
+        $participants = Participant::with('training')->where('user_id',\Auth::user()->id)->get();
+        return DataTables::of($participants)
+        ->addColumn('abstractfile',function($participant){
+            if($participant->properabstract=='belum ada data'){
+                return 'belum ada data silahkan upload abstract <a href="training/asparticipant">disini</a>';
+            }else{
+                return '<a href="storage/proper/'.$participant->properabstract.'">'.$participant->properabstract.'</a>';
+            }
+        })
+        ->addColumn('docsfile',function($participant){
+            if ($participant->properdocs=='belum ada data') {
+                return 'belum ada data silahkan upload dokumen proper <a href="training/asparticipant">disini</a>';
+            } else {
+                return '<a href="storage/proper/'.$participant->properdocs.'">'.$participant->properdocs.'</a>';
+            }
+        })->addColumn('starting_date',function($participant){
+            return Carbon::parse($participant->training->start_date)->format('d-m-Y');
+        })->addColumn('enddate',function($participant){
+            return Carbon::parse($participant->training->end_date)->format('d-m-Y');
+        })->rawColumns(['abstractfile','docsfile','starting_date','enddate'])->toJson();
+    }
+
+    // as participant upload proper documents
+    public function participantproper(Request $request)
+    {
+        //return $request->file('properdocs');
+        $storage = Storage::disk('proper');
+        $properdocs = $request->file('properdocs');
+        $properabstract = $request->file('properabstract');
+
+        $participant = Participant::find($request->get('participant_id'));
+
+        if(!empty($properdocs)){
+            //delete old file
+            $storage->delete($participant->properdocs);
+            //update and upload file
+            $properdocsname=preg_replace('/\s+/','_',$properdocs->getClientOriginalName());
+            $participant->update([
+                'propername' => $request->get('propername'),
+                'properdocs' => $properdocsname,
+                'slug' => str_slug($request->get('propername'))
+            ]);
+
+            $storage->put($properdocsname,file_get_contents($properdocs));
+        }
+
+        if(!empty($properabstract)){
+            //delete old file first
+            $storage->delete($participant->properabstract);
+            //update and upload file
+            $properabstractname=preg_replace('/\s+/','_',$properabstract->getClientOriginalName());
+            $participant->update([
+                'properabstract'=>$properabstractname
+            ]);
+            $storage->put($properabstractname,file_get_contents($properabstract));
+        }        
+
+        return redirect()->back()->with('message','Berhasil Menyimpan Data');
     }
 }

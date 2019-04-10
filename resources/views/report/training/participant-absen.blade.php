@@ -29,10 +29,10 @@
            <table class="table table-bordered">
                <thead>
                    <tr>
-                       <td>No.</td>
-                       <td>Nama Peserta/NIP</td>
-                       <td>Instansi Asal</td>
-                       <td>Tanda Tangan</td>
+                       <td class="col-xs-1">No.</td>
+                       <td class="col-xs-4">Nama Peserta/NIP</td>
+                       <td class="col-xs-4">Instansi Asal</td>
+                       <td class="col-xs-3">Tanda Tangan</td>
                    </tr>
                </thead>
                <tbody>
