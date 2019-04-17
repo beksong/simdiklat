@@ -15,7 +15,7 @@ class Training extends Model
 
     public function masterschedules()
     {
-        return $this->hasMany('App\MasterSchedule');
+        return $this->hasMany('App\Masterschedule');
     }
 
     public function schedules()

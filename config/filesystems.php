@@ -69,6 +69,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'teaching_administrations' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/teaching_administrations'),
+            'url' => env('APP_URL').'/storage/teaching_administrations',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

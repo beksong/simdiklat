@@ -121,13 +121,18 @@ class TrainingController extends Controller
         $trainings=Training::with(['Pic'=>function($query){
             $query->with('Institution')->get();
         }])->orderBy('start_date','asc')->get();
+
         return DataTables::of($trainings)
         ->addColumn('schedule',function($training){
             return view('training.tbschedule',compact('training'));
         })
         ->addColumn('action',function($training){
             return view('training.tbbutton',compact('training'));
-        })->rawColumns(['schedule','action'])->toJson();
+        })->addColumn('startingdate',function($training){
+            return Carbon::parse($training->start_date)->format('d-m-Y');
+        })->addColumn('enddate',function($training){
+            return Carbon::parse($training->end_date)->format('d-m-Y');
+        })->rawColumns(['schedule','action','startingdate','enddate'])->toJson();
     }
 
     public function traininglist()
@@ -139,11 +144,16 @@ class TrainingController extends Controller
     {
         $trainings = Training::with(['Pic'=>function($query){
             $query->with('Institution');
-        }])->where('start_date','>',Carbon::now())->orWhere('end_date','>',Carbon::now())->orderBy('start_date','asc')->get();
+        }])->where('start_date','>',Carbon::now())->orWhere('end_date','>',Carbon::now(-7))->orderBy('start_date','asc')->get();
+        
         return DataTables::of($trainings)
         ->addColumn('participant',function($training){
             return view('training.opentraining.tbbutton',compact('training'));
-        })->rawColumns(['participant'])->toJson();
+        })->addColumn('startingdate',function($training){
+            return Carbon::parse($training->start_date)->format('d-m-Y');
+        })->addColumn('enddate',function($training){
+            return Carbon::parse($training->end_date)->format('d-m-Y');
+        })->rawColumns(['participant','startingdate','enddate'])->toJson();
     }
 
     // admin get registered participants

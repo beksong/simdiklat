@@ -90,10 +90,13 @@ Route::get('getspeakers','SpeakerController@getSpeakers')->name('getspeakers');
 // ajax request on selected user_id in schedule
 Route::get('getspeaker','SpeakerController@getSubjectById')->name('getsubjectbyid');
 
-// Route for speakers when they wanna upload documents or see the schedule
+// Route for speakers when they wanna see the schedule
 Route::get('myschedule','SpeakerController@getmyschedule')->name('myschedule');
 Route::get('getmyscheduledetails','SpeakerController@getmyscheduledetails')->name('getmyscheduledetails');
-
+//Route for speakers for uploading learning media
+Route::get('learningmedia','SpeakerController@learningmedia')->name('learningmedia');
+Route::get('getlearningmedia','SpeakerController@getlearningmedia')->name('getlearningmedia');
+Route::put('learningmedia','SpeakerController@storelearningmedia')->name('learningmedia');
 //trainings
 Route::get('trainings','TrainingController@index')->name('trainings');
 Route::post('trainings','TrainingController@store')->name('trainings');

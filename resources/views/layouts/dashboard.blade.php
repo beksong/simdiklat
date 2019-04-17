@@ -401,7 +401,7 @@
             <span>Management Peserta</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-blue"></i>Diklat yang sedang dibuka</a></li>
+            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-blue"></i>Data Peserta Diklat</a></li>
           </ul>
         </li>
         <li class="header">Menu Widyaiswara</li>
@@ -412,7 +412,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('myschedule') }}"><i class="fa fa-calendar-o text-blue"></i>Jadwal Saya</a></li>
-            <li><a href="{{ route('myschedule') }}"><i class="fa fa-folder-o text-blue"></i>Upload Perangkat Mengajar</a></li>
+            <li><a href="{{ route('learningmedia') }}"><i class="fa fa-folder-o text-blue"></i>Upload Perangkat Mengajar</a></li>
           </ul>
         </li>
         <li class="header">Master Data</li>

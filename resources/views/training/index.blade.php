@@ -250,9 +250,9 @@
             columns : [
                 { data : null, sortable : false},
                 { data : "name",name : 'name'},
-                { data : "start_date",name : 'start_date'},
+                { data : "startingdate",name : 'startingdate'},
                 { data : "period",name : 'period'},
-                { data : "end_date",name : 'end_date'},
+                { data : "enddate",name : 'enddate'},
                 { data : "pic.institution.name",name : 'pic.institution.name'},
                 { data : "description",name : 'description'},
                 { data : "schedule",name :"schedule", orderable : false, searchable : false},
