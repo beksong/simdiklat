@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use Grei\TanggalMerah;
 use App\Participant;
 use PDF;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx as Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class TrainingController extends Controller
 {
@@ -232,6 +235,69 @@ class TrainingController extends Controller
     public function exportparticipantsbyadmin($training_id)
     {
         $training=Training::find($training_id);
-        $participants = Participant::where('training_id',$training_id)->get(); 
+        $participants = Participant::where('training_id',$training_id)->get();
+        if($participants->isEmpty()){
+            return redirect()->back()->with('message','Belum Ada Peserta');
+        }
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet()->setTitle('Data Peserta');
+        $spreadsheet->setActiveSheetIndex(0)
+        ->setCellValue('A1', 'no')
+        ->setCellValue('B1', 'nama lembaga diklat')
+        ->setCellValue('C1', 'nama instansi')
+        ->setCellValue('D1', 'jenis peserta')
+        ->setCellValue('E1', 'jenis identitas')
+        ->setCellValue('F1', 'nomor identitas')
+        ->setCellValue('G1', 'nip')
+        ->setCellValue('H1', 'nrp')
+        ->setCellValue('I1', 'nama')
+        ->setCellValue('J1', 'tempat lahir')
+        ->setCellValue('K1', 'tanggal lahir')
+        ->setCellValue('L1', 'jenis kelamin')
+        ->setCellValue('M1', 'agama')
+        ->setCellValue('N1', 'pangkat')
+        ->setCellValue('O1', 'golongan')
+        ->setCellValue('P1', 'alamat')
+        ->setCellValue('Q1', 'alamat kantor')
+        ->setCellValue('R1', 'no telp kantor');
+
+        foreach ($participants as $key => $p) {
+            $pangkat = explode(",",$p->rank);
+            $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A'.($key+2), $key+1)
+            ->setCellValue('B'.($key+2), 'Badan Pengembangan Sumber Daya Manusia Provinsi Sulawesi Tengah')
+            ->setCellValue('C'.($key+2), $p->institution)
+            ->setCellValue('D'.($key+2), $p->participant_type)
+            ->setCellValue('E'.($key+2), '')
+            ->setCellValue('F'.($key+2), '')
+            ->setCellValue('G'.($key+2), " ".$p->user->nip)
+            ->setCellValue('H'.($key+2), '')
+            ->setCellValue('I'.($key+2), $p->frontdegree.' '.$p->fullname.','.$p->backdegree)
+            ->setCellValue('J'.($key+2), $p->user->place_birth)
+            ->setCellValue('K'.($key+2), $p->user->date_birth)
+            ->setCellValue('L'.($key+2), $p->user->gender=='Laki-laki' ? 'L' : 'P')
+            ->setCellValue('M'.($key+2), $p->religion)
+            ->setCellValue('N'.($key+2), $pangkat[0])
+            ->setCellValue('O'.($key+2), $pangkat[1])
+            ->setCellValue('P'.($key+2), $p->user->address)
+            ->setCellValue('Q'.($key+2), $p->institution_address)
+            ->setCellValue('R'.($key+2), $p->institution_phone);
+        }
+
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="01simple.xls"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        // If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer->save('php://output');
     }
 }
