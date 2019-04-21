@@ -50,6 +50,7 @@ class HomeController extends Controller
             'name' => $req->get('name'),
             'email' => $req->get('email'),
             'nip' => $req->get('nip'),
+            'religion' => $req->get('religion'),
             'place_birth' => $req->get('tempat_lahir'),
             'date_birth' => $req->get('tanggal_lahir'),
             'gender' => $req->get('jenis_kelamin'),

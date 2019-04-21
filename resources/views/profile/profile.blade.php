@@ -116,6 +116,19 @@
 
                     <div class="box-body">
                         <div class="form-group has-feedback">
+                            <label for="religion" class="col-sm-2 control-label">Agama</label>
+
+                            <div class="col-sm-10">
+                                <input type="religion" id="religion" name="religion" class="form-control{{ $errors->has('religion') ? ' is-invalid' : '' }}" aria-describedby="helpBlock4" placeholder="Agama anda" value="{{ $user->religion }}" required>
+                                @if($errors->has('religion'))
+                                    <span id="helpBlock4" class="help-block"><strong>{{ $errors->first('religion') }}</strong></span> 
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="form-group has-feedback">
                             <label for="jenis_kelamin" class="col-sm-2 control-label">Jenis Kelamin</label>
 
                             <div class="col-sm-10">

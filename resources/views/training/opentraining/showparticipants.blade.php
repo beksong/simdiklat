@@ -60,6 +60,7 @@
                                 <th>Unit Kerja/Sub unit kerja</th>
                                 <th>Alamat Kantor</th>
                                 <th>Telepon Kantor</th>
+                                <th>Persyaratan</th>
                                 <th>action</th>
                             </tr>
                         </thead>
@@ -193,6 +194,7 @@
                 { data : "institution",name: 'institution'},
                 { data : "institution_address",name: 'institution_address'},
                 { data : "institution_phone",name: 'institution_phone'},
+                { data : "requirementsdocs",name: 'requirementsdocs'},
                 { data : "action",name : "action",orderable : false, searchable : false},
             ]
         });

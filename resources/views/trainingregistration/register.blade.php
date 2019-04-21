@@ -47,7 +47,7 @@
                 <div class="box-body table-responsive">
                     <!-- registration form here -->
                     <!-- form profile -->
-                    <form action="{{ route('registertraining') }}" method="post" class="form-horizontal">
+                    <form action="{{ route('registertraining') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
                         @csrf
                         @if($participant!=null)
                             {{method_field('PUT')}}
@@ -192,6 +192,18 @@
                                         <span id="helpBlock9" class="help-block"><strong>{{ $errors->first('institution_phone') }}</strong></span> 
                                     @endif
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            <label for="requirements" class="col-sm-3 control-label">Upload scan berkas persyaratan pendaftaran</label>
+                            <div class="col-sm-9">
+                                <input type="file" id="requirements" name="requirements" accept="application/pdf">
+                                <p>{{ $participant!=null ? $participant->requirements : 'Belum Ada Dokumen diupload' }}</p>
+                                <span class="fa fa-file-o form-control-feedback"></span>
+                                @if($errors->has('requirements'))
+                                    <span id="helpBlock10" class="help-block"><strong>{{ $errors->first('requirements') }}</strong></span> 
+                                @endif
                             </div>
                         </div>
 

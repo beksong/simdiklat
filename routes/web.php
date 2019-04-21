@@ -125,6 +125,10 @@ Route::delete('training/deleteparticipantbyadmin','TrainingController@deletepart
  * here is admin print participant and create absent on pdf
  */
 Route::get('training/printparticipants/{training_id}','TrainingController@printparticipantsbyadmin')->name('printparticipantsbyadmin');
+/**
+ * here is admin export participant data into excel
+ */
+Route::get('training/exportparticipants/{training_id}','TrainingController@exportparticipantsbyadmin')->name('exportparticipantsbyadmin');
 // schedules masters
 Route::get('schedules','ScheduleController@index')->name('schedules');
 Route::get('schedules/{id}','ScheduleController@getScheduleByTrainingId')->name('getschedulebytrainingid');

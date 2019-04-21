@@ -176,9 +176,12 @@ class TrainingController extends Controller
     {
         $participants = Participant::with('user')->where('training_id',$request->get('q'))->get();
         return DataTables::of($participants)
+        ->addColumn('requirementsdocs',function($participant){
+            return '<a href="../../storage/requirement/'.$participant->requirements.'">'.$participant->requirements.'</a>';
+        })
         ->addColumn('action',function($participant){
             return view('training.opentraining.tbbuttonparticipant',compact('participant'));
-        })->toJson();
+        })->rawColumns(['requirementsdocs','action'])->toJson();
     }
 
     // get trainings list for admin select2
@@ -222,5 +225,13 @@ class TrainingController extends Controller
         $pdf->setOrientation('portrait');
         //return $pdf->download('absen.pdf');
         return view('report.training.participant-absen',compact('participants','training'));
+    }
+    /**
+     * here is admin export participant data into excel
+     */
+    public function exportparticipantsbyadmin($training_id)
+    {
+        $training=Training::find($training_id);
+        $participants = Participant::where('training_id',$training_id)->get(); 
     }
 }

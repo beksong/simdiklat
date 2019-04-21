@@ -57,39 +57,87 @@ class TrainingRegistrationController extends Controller
 
     public function store(RegisterTrainingRequest $request)
     {
+        $storage = Storage::disk('requirement');
+        $file = $request->file('requirements');
+        $filename=preg_replace('/\s+/','_',$file->getClientOriginalName());
         $participant = new Participant(array(
             'user_id' => \Auth::user()->id,
             'phone' => $request->get('phone'),
             'training_id' => $request->get('training_id'),
             'frontdegree' => $request->get('frontdegree'),
             'backdegree' => $request->get('backdegree'),
-            'fullname' => $request->get('fullname'),
+            'fullname' => strtoupper($request->get('fullname')),
             'rank' => $request->get('rank'), //pangkat,golru
             'position' => $request->get('position'),//jabatan
             'institution' => $request->get('institution'), //institusi asal
             'institution_address' => $request->get('institution_address'),
             'institution_phone' => $request->get('institution_phone'),
+            'requirements' => $filename
         ));
 
         $participant->save();
+        $storage->put($filename,file_get_contents($file));
+
         return redirect('training/openregistration')->with('message','Berhasil Mendaftar');
     }
 
     public function update(RegisterTrainingRequest $request)
     {
         $participant = Participant::where('user_id',\Auth::user()->id)->firstOrFail();
-        $participant->update([
-            'phone' => $request->get('phone'),
-            'training_id' => $request->get('training_id'),
-            'frontdegree' => $request->get('frontdegree'),
-            'backdegree' => $request->get('backdegree'),
-            'fullname' => $request->get('fullname'),
-            'rank' => $request->get('rank'), //pangkat,golru
-            'position' => $request->get('position'),//jabatan
-            'institution' => $request->get('institution'), //institusi asal
-            'institution_address' => $request->get('institution_address'),
-            'institution_phone' => $request->get('institution_phone'),
-        ]);
+        $storage = Storage::disk('requirement');
+        $file = $request->file('requirements');
+        //delete old file
+        if(!empty($file)){
+            $filename=preg_replace('/\s+/','_',$file->getClientOriginalName());
+            if ($participant->requirements!='') {
+                $storage->delete($participant->requirements);
+
+                //update data
+                $participant->update([
+                    'phone' => $request->get('phone'),
+                    'training_id' => $request->get('training_id'),
+                    'frontdegree' => $request->get('frontdegree'),
+                    'backdegree' => $request->get('backdegree'),
+                    'fullname' => $request->get('fullname'),
+                    'rank' => $request->get('rank'), //pangkat,golru
+                    'position' => $request->get('position'),//jabatan
+                    'institution' => $request->get('institution'), //institusi asal
+                    'institution_address' => $request->get('institution_address'),
+                    'institution_phone' => $request->get('institution_phone'),
+                    'requirements' => $filename
+                ]);
+            }else{
+                //update data
+                $participant->update([
+                    'phone' => $request->get('phone'),
+                    'training_id' => $request->get('training_id'),
+                    'frontdegree' => $request->get('frontdegree'),
+                    'backdegree' => $request->get('backdegree'),
+                    'fullname' => $request->get('fullname'),
+                    'rank' => $request->get('rank'), //pangkat,golru
+                    'position' => $request->get('position'),//jabatan
+                    'institution' => $request->get('institution'), //institusi asal
+                    'institution_address' => $request->get('institution_address'),
+                    'institution_phone' => $request->get('institution_phone'),
+                    'requirements' => $filename
+                ]);
+            }
+            $storage->put($filename,file_get_contents($file));
+        }else{
+            //update data
+            $participant->update([
+                'phone' => $request->get('phone'),
+                'training_id' => $request->get('training_id'),
+                'frontdegree' => $request->get('frontdegree'),
+                'backdegree' => $request->get('backdegree'),
+                'fullname' => $request->get('fullname'),
+                'rank' => $request->get('rank'), //pangkat,golru
+                'position' => $request->get('position'),//jabatan
+                'institution' => $request->get('institution'), //institusi asal
+                'institution_address' => $request->get('institution_address'),
+                'institution_phone' => $request->get('institution_phone'),
+            ]);
+        }
         return redirect('training/openregistration')->with('message','Berhasil merubah data');
     }
 
