@@ -386,22 +386,41 @@
         <li class="header">Admin BPSDM Navigation</li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-files-o text-red"></i>
             <span>Management Diklat</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('matadiklat') }}"><i class="fa fa-circle-o"></i> Mata Diklat</a></li>
-            <li><a href="{{ route('speakers') }}"><i class="fa fa-circle-o"></i> Speakers/Widyaiswara</a></li>
-            <li><a href="{{ route('trainings') }}"><i class="fa fa-circle-o"></i> Buat Diklat</a></li>
+            <li><a href="{{ route('matadiklat') }}"><i class="fa fa-circle-o text-red"></i> Mata Diklat</a></li>
+            <li><a href="{{ route('speakers') }}"><i class="fa fa-circle-o text-red"></i> Speakers/Widyaiswara</a></li>
+            <li><a href="{{ route('trainings') }}"><i class="fa fa-circle-o text-red"></i> Buat Diklat</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-users"></i>
+            <i class="fa fa-users text-red"></i>
             <span>Management Peserta</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-blue"></i>Data Peserta Diklat</a></li>
+            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-red"></i>Data Peserta Diklat</a></li>
+          </ul>
+        </li>
+        <li class="header">Admin BKPSDM Kab/Kota</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o text-blue"></i>
+            <span>Management Diklat</span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('trainingbkpsdm') }}"><i class="fa fa-circle-o text-blue"></i> Buat Diklat</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users text-blue"></i>
+            <span>Management Peserta</span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('traininglistbkpsdm') }}"><i class="fa fa-circle-o text-blue"></i>Data Peserta Diklat</a></li>
           </ul>
         </li>
         <li class="header">Menu Widyaiswara</li>

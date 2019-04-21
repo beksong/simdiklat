@@ -115,9 +115,7 @@
                                 <th>Tanggal Mulai</th>
                                 <th>Lama Diklat (hari)</th>
                                 <th>Tanggal Selesai</th>
-                                <th>Penyelenggara</th>
                                 <th>Keterangan</th>
-                                <th>Buat Jadwal</th>
                                 <th>Cetak Jadwal</th>
                                 <th>action</th>
                             </tr>
@@ -242,7 +240,7 @@
             info        : true,
             autoWidth   : true,
             ajax : {
-                url : '{!! route('gettrainings') !!}',
+                url : '{!! route('gettrainingbkpsdm') !!}',
                 dataType : 'json'
             },
             fnCreatedRow: function (row, data, index) {
@@ -254,10 +252,8 @@
                 { data : "startingdate",name : 'startingdate'},
                 { data : "period",name : 'period'},
                 { data : "enddate",name : 'enddate'},
-                { data : "pic.institution.name",name : 'pic.institution.name'},
                 { data : "description",name : 'description'},
-                { data : "schedule",name :"schedule", orderable : false, searchable : false},
-                { data : "printschedules",name :"printschedules", orderable : false, searchable : false},
+                { data : "printschedules",name : "printschedules",orderable : false, searchable : false},
                 { data : "action",name : "action",orderable : false, searchable : false},
             ],
         });

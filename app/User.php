@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function pic()
     {
-        return $this->hasOne('App\Pic');    
+        return $this->hasOne('App\Pic')->select('id');    
     }                                                                                                                                                       
 
     public function speakers()

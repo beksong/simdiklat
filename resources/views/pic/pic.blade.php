@@ -257,8 +257,8 @@
             },
             columns : [
                 { data : null, sortable : false},
-                { data : "user.name",name : 'user_id'},
-                { data : "institution.name",name : 'institution_id'},
+                { data : "user.name",name : 'user.name'},
+                { data : "institution.name",name : 'institution.name'},
                 { data : "action",name : "action",orderable : false, searchable : false},
             ],
         });

@@ -27,6 +27,9 @@ class TrainingController extends Controller
     public function store(TrainingRequest $request)
     {
         $pic=\Auth::user()->pic()->get();
+        if($pic->isEmpty()){
+            return redirect()->back()->with('message','Anda Tidak Bukan PIC,tidak dapat menyimpan data');
+        }
         $start_date=Carbon::parse($request->get('start_date'));
         //check weekend
         if($start_date->isWeekend()){
@@ -125,14 +128,19 @@ class TrainingController extends Controller
         return DataTables::of($trainings)
         ->addColumn('schedule',function($training){
             return view('training.tbschedule',compact('training'));
-        })
-        ->addColumn('action',function($training){
+        })->addColumn('printschedules',function($training){
+            if($training->masterschedules->isEmpty()){
+                return 'Belum Ada Jadwal';
+            }else{
+                return '<a href="printschedules/'.$training->id.'" class="badge bg-green"><i class="fa fa-print"></i> Print Jadwal</a>';
+            }
+        })->addColumn('action',function($training){
             return view('training.tbbutton',compact('training'));
         })->addColumn('startingdate',function($training){
             return Carbon::parse($training->start_date)->format('d-m-Y');
         })->addColumn('enddate',function($training){
             return Carbon::parse($training->end_date)->format('d-m-Y');
-        })->rawColumns(['schedule','action','startingdate','enddate'])->toJson();
+        })->rawColumns(['printschedules','schedule','action','startingdate','enddate'])->toJson();
     }
 
     public function traininglist()
