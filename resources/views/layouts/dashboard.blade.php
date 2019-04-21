@@ -6,29 +6,7 @@
   <title>BPSDM Prov. Sulteng</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="{{ asset('Ionicons/css/ionicons.min.css') }}">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="{{ asset('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
-  <!-- bootstrap daterangepicker -->
-  <link rel="stylesheet" href="{{ asset('bootstrap-daterangepicker/daterangepicker.css') }}">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="{{ asset('select2/dist/css/select2.min.css') }}">
-  <!-- jvectormap -->
-  <!-- <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css"> -->
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -655,42 +633,7 @@
   <div class="control-sidebar-bg"></div>
 
 </div>
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
-<script src="{{ asset('jquery/dist/jquery.min.js') }}"></script>
-<!-- jquery ui -->
-<script src="{{ asset('jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<!-- DataTables -->
-<script src="{{ asset('datatables.net/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="{{ asset('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-<!-- bootstrap daterangepicker -->
-<script src="{{ asset('bootstrap-daterangepicker/moment.min.js') }}"></script>
-<script src="{{ asset('bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-<!-- Select2 -->
-<script src="{{ asset('select2/dist/js/select2.full.min.js') }}"></script>
-<!-- FastClick -->
-<script src="{{ asset('fastclick/lib/fastclick.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- Sparkline -->
-<script src="{{ asset('jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
-<!-- jvectormap  -->
-<!-- <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script> -->
-<!-- SlimScroll -->
-<script src="{{ asset('jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-<!-- ChartJS -->
-<!-- <script src="bower_components/chart.js/Chart.js"></script> -->
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script> -->
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="{{ asset('dist/js/demo.js') }}"></script> -->
+<script src="{{ asset('js/app.js') }}"></script>
 @stack('jscript')
 </body>
 </html>
