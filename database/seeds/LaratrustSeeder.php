@@ -195,6 +195,12 @@ class LaratrustSeeder extends Seeder
             'description' => 'permission for creating training schedules'
         ]);
 
+        $perm = \App\Permission::create([
+            'name' => 'show-management-participant',
+            'display_name' => 'show management participant',
+            'description' => 'permission for showing management participant'
+        ]);
+
         // my custom role
         $role = \App\Role::create([
             'name' => 'widyaiswara',

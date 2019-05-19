@@ -154,6 +154,7 @@
             @endpermission
           </ul>
         </li>
+        @permission('show-management-participant')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-users text-red"></i>
@@ -163,6 +164,7 @@
             <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-red"></i>Data Peserta Diklat</a></li>
           </ul>
         </li>
+        @endpermission
         @role('admin-bkpsdm')
         <li class="header">Admin BKPSDM Kab/Kota</li>
         <li class="treeview">

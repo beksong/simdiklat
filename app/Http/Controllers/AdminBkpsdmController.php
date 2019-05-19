@@ -10,7 +10,7 @@ class AdminBkpsdmController extends Controller
 {
     public function __construct()
     {
-        return $this->middleware('auth');
+        return $this->middleware('auth','admin-bkpsdm');
     }
 
     public function index()

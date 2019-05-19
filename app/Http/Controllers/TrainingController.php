@@ -223,7 +223,7 @@ class TrainingController extends Controller
     public function printparticipantsbyadmin($training_id)
     {
         $training=Training::find($training_id);
-        $participants = Participant::where('training_id',$training_id)->get();
+        $participants = Participant::where('training_id',$training_id)->orderBy('fullname','asc')->get();
         $pdf = PDF::loadView('report.training.participant-absen',compact('participants','training'));
         $pdf->setOrientation('portrait');
         //return $pdf->download('absen.pdf');
