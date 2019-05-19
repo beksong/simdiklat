@@ -13,7 +13,7 @@ class SuperadminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','role:superadministrator']);
     }
     /**
      * Display a listing of the resource.
@@ -183,7 +183,7 @@ class SuperadminController extends Controller
     public function syncpermissionrole(Request $request)
     {
         $role = Role::find($request->get('role_id'));
-        if($request->get('role_name')==''){
+        if($request->get('permission_name')==''){
             return redirect()->back()->with('message','Minimal 1 permission');
         }
         $role->syncPermissions($request->get('permission_name'));

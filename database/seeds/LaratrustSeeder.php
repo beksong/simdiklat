@@ -58,14 +58,14 @@ class LaratrustSeeder extends Seeder
             // Create default user for each role
             $user = \App\User::create([
                 'nip' => random_int(1,9999999999999999),
-                'address' => Str::random(100),
-                'place_birth' => Str::random(100),
-                'date_birth' => Carbon::now(),
+                'address' => 'Jl. Basuki Rahmat I Lrg. Menara I No. 04 Palu',
+                'place_birth' => 'Lumajang',
+                'date_birth' => '1984-08-26',
                 'religion' => 'islam',
                 'gender' => 'Laki-laki',
-                'name' => ucwords(str_replace('_', ' ', $key)),
-                'email' => $key.'@app.com',
-                'password' => bcrypt('password')
+                'name' => 'Aditya Dwiantoro',
+                'email' => $key.'adityadwiantoro@gmail.com',
+                'password' => bcrypt('badandiklat')
             ]);
 
             $user->attachRole($role);
@@ -81,15 +81,14 @@ class LaratrustSeeder extends Seeder
                     // Create default user for each permission set
                     $user = \App\User::create([
                         'nip' => random_int(1,9999999999999999),
-                        'address' => Str::random(100),
-                        'place_birth' => Str::random(100),
-                        'date_birth' => Carbon::now(),
+                        'address' => 'Jl. Basuki Rahmat I Lrg. Menara I No. 04 Palu',
+                        'place_birth' => 'Lumajang',
+                        'date_birth' => '1984-08-26',
                         'religion' => 'islam',
                         'gender' => 'Laki-laki',
-                        'name' => ucwords(str_replace('_', ' ', $key)),
-                        'email' => $key.'@app.com',
-                        'password' => bcrypt('password'),
-                        'remember_token' => str_random(10),
+                        'name' => 'Aditya Dwiantoro',
+                        'email' => $key.'adityadwiantoro@gmail.com',
+                        'password' => bcrypt('badandiklat')
                     ]);
                     $permissions = [];
 
@@ -111,34 +110,103 @@ class LaratrustSeeder extends Seeder
                 $user->permissions()->sync($permissions);
             }
         }
+        // my custom permission
+        $perm = \App\Permission::create([
+            'name' => 'management-diklat',
+            'display_name' => 'management-diklat',
+            'description' => 'permission for showing management diklat menu title'
+        ]);
 
-        $user = new \App\User(array(
-            'nip' => random_int(1,9999999999999999),
-            'name' => Str::random(10),
-            'email' => 'superadmin@mail.com',
-            'address' => Str::random(100),
-            'religion' => 'islam',
-            'password' => bcrypt('123456'),
-            'place_birth' => Str::random(100),
-            'date_birth' => Carbon::now(),
-            'gender' => 'Laki-laki'
-        ));
-        $user->save();
+        $perm = \App\Permission::create([
+            'name' => 'show-subjects',
+            'display_name' => 'show-subjects',
+            'description' => 'permission for showing training subjects'
+        ]);
 
-        for ($i=0; $i < 100 ; $i++) { 
-            $user = new \App\User(array(
-                'nip' => random_int(1,9999999999999999),
-                'name' => Str::random(10),
-                'email' => Str::random(10).'@gmail.com',
-                'address' => Str::random(100),
-                'religion' => 'islam',
-                'password' => bcrypt('secret'),
-                'place_birth' => Str::random(100),
-                'date_birth' => Carbon::now(),
-                'gender' => 'Perempuan'
-            ));
-            $user->save();
-        }
+        $perm = \App\Permission::create([
+            'name' => 'create-subjects',
+            'display_name' => 'create-subjects',
+            'description' => 'permission for creating training subjects'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'update-subjects',
+            'display_name' => 'update-subjects',
+            'description' => 'permission for updating training subjects'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'delete-subjects',
+            'display_name' => 'delete-subjects',
+            'description' => 'permission for deleting training subjects'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'show-speakers',
+            'display_name' => 'show-speakers',
+            'description' => 'permission for showing speakers of training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'create-speakers',
+            'display_name' => 'create-speakers',
+            'description' => 'permission for creating speakers of training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'update-speakers',
+            'display_name' => 'update-speakers',
+            'description' => 'permission for updateing speakers of training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'delete-speakers',
+            'display_name' => 'delete-speakers',
+            'description' => 'permission for deleting speakers of training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'show-trainings',
+            'display_name' => 'show-trainings',
+            'description' => 'permission for showing training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'create-trainings',
+            'display_name' => 'create-trainings',
+            'description' => 'permission for creating training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'update-trainings',
+            'display_name' => 'update-trainings',
+            'description' => 'permission for updating training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'delete-trainings',
+            'display_name' => 'delete-trainings',
+            'description' => 'permission for deleting training'
+        ]);
+
+        $perm = \App\Permission::create([
+            'name' => 'create-training-schedule',
+            'display_name' => 'create-training-schedule',
+            'description' => 'permission for creating training schedules'
+        ]);
+
+        // my custom role
+        $role = \App\Role::create([
+            'name' => 'widyaiswara',
+            'display_name' => 'Widyaiswara',
+            'description' => 'speakers role'
+        ]);
+
+        $role = \App\Role::create([
+            'name' => 'admin-bkpsdm',
+            'display_name' => 'admin-bkpsdm',
+            'description' => 'role for admin bkpsdm'
+        ]);
     }
 
     /**

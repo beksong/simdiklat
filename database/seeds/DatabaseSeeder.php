@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(InstitutionsTableSeeder::class);
         $this->call(PicsTableSeeder::class);
         $this->call(SubjectsTableSeeder::class);
-        $this->call(SpeakersTableSeeder::class);
-        $this->call(TrainingsTableSeeder::class);
+        // $this->call(SpeakersTableSeeder::class);
+        // $this->call(TrainingsTableSeeder::class);
         $this->call(LaratrustSeeder::class);
     }
 }

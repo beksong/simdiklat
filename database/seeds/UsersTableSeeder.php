@@ -16,30 +16,15 @@ class UsersTableSeeder extends Seeder
     {
         $user = new User(array(
             'nip' => random_int(1,9999999999999999),
-            'name' => Str::random(10),
-            'email' => 'superadmin@mail.com',
+            'address' => 'Jl. Basuki Rahmat I Lrg. Menara I No. 04 Palu',
+            'place_birth' => 'Lumajang',
+            'date_birth' => '1984-08-26',
             'religion' => 'islam',
-            'address' => Str::random(100),
-            'password' => bcrypt('123456'),
-            'place_birth' => Str::random(100),
-            'date_birth' => Carbon::now(),
-            'gender' => 'Laki-laki'
+            'gender' => 'Laki-laki',
+            'name' => 'Aditya Dwiantoro',
+            'email' => 'adityadwiantoro@gmail.com',
+            'password' => bcrypt('badandiklat')
         ));
         $user->save();
-
-        for ($i=0; $i < 100 ; $i++) { 
-            $user = new User(array(
-                'nip' => random_int(1,9999999999999999),
-                'name' => Str::random(10),
-                'email' => Str::random(10).'@gmail.com',
-                'religion' => 'islam',
-                'address' => Str::random(100),
-                'password' => bcrypt('secret'),
-                'place_birth' => Str::random(100),
-                'date_birth' => Carbon::now(),
-                'gender' => 'Perempuan'
-            ));
-            $user->save();
-        }
     }
 }

@@ -37,6 +37,7 @@
     <!-- content -->
     <div class="row">
         <!-- left side -->
+        @permission('create-subjects')
         <div class="col-md-6 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -65,6 +66,7 @@
                 
             </div>
         </div>
+        @endpermission
         <!-- right side -->
         <div class="col-md-6 col-sm-12 col-xs-12">
             <div class="box box-info">

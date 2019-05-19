@@ -37,7 +37,8 @@
     <!-- content -->
     <div class="row">
         <!-- left side -->
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        @permission('create-speakers')
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Tambah/Ubah Data Pembicara/Widyaiswara/Pengampu Mata Diklat</h3>
@@ -80,8 +81,9 @@
                 
             </div>
         </div>
+        @endpermission
         <!-- right side -->
-        <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Pembicara / Pemateri / Pengampu mata diklat</h3>

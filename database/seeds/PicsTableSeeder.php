@@ -13,13 +13,10 @@ class PicsTableSeeder extends Seeder
     public function run()
     {
         //
-        for ($i=0; $i < 20; $i++) { 
-            # code...
-            $pic = new Pic(array(
-                'user_id'=>random_int(2,100),
-                'institution_id' => random_int(1,12)
-            ));
-            $pic->save();
-        }
+        $pic = new Pic(array(
+            'user_id'=> '1',
+            'institution_id' => '1'
+        ));
+        $pic->save();
     }
 }

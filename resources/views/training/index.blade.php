@@ -35,6 +35,7 @@
         @endif
     </div>
     <!-- content -->
+    @permission('create-trainings')
     <div class="row">
         <!-- left side -->
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -97,7 +98,7 @@
             </div>
         </div>
     </div>
-
+    @endpermission
     <!-- table row -->
     <div class="row">
         <!-- right side -->
