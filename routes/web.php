@@ -52,6 +52,9 @@ Route::post('syncroleuser','SuperadminController@syncroleuser')->name('syncroleu
 Route::get('profile','HomeController@profile')->name('profile');
 Route::post('profile','HomeController@update')->name('updateprofile');
 
+// change passwords
+Route::put('changepassword','HomeController@changepassword')->name('changepassword');
+
 // lembaga penyelenggara diklat 
 Route::get('lembaga','InstitutionController@index')->name('lembaga');
 Route::post('lembaga','InstitutionController@save');

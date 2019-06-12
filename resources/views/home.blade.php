@@ -52,6 +52,7 @@
                                 <td>No.</td>
                                 <td>Nama Diklat</td>
                                 <td>Tanggal Mulai</td>
+                                <td>Persyaratan/Keterangan</td>
                                 <td>Daftar/Cetak</td>
                             </tr>
                         </thead>
@@ -87,6 +88,7 @@ $(document).ready(function(){
             { data : null, sortable : false},
             { data : "name",name : 'name'},
             { data : "start_date",name : 'start_date'},
+            { data : "description",name : 'description'},
             { data : "action",name : "action",orderable : false, searchable : false},
         ],
     });

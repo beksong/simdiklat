@@ -62,7 +62,7 @@
                 @endif
                 <p>
                   {{ Auth::user()->name}}
-                  <small>Member since Nov. 2012</small>
+                  <small><a href="#changepassword" class="badge bg-yellow" data-toggle="modal"> Ubah Password</a></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -222,6 +222,42 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     @yield('content')
+    <div class="modal modal-warning fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="modalLabel">Ubah Password</h4>
+              </div>
+              <div class="modal-body">
+                  <form method="post" id="frm_changepassword" action="{{ route('changepassword') }}">
+                      @csrf
+                      {{ method_field('PUT') }}
+                      <div class="box-body">
+                          <div class="form-group has-feedback">
+                              <label for="password" class="control-label">Password Baru</label>
+
+                              <input type="password" id="password" name="password" class="form-control" aria-describedby="helpBlock1" placeholder="Password baru" autofocus required>
+                          </div>
+                      </div>
+                      <div class="box-body">
+                          <div class="form-group has-feedback">
+                              <label for="confirm_password" class="control-label">Ketik Ulang Password</label>
+
+                              <input type="password" id="confirm_password" name="confirm_password" class="form-control" aria-describedby="helpBlock1" placeholder="Masukkan kembali password baru" required>
+                          </div>
+                      </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="submit" class="btn btn-outline"> <i class="fa fa-save"></i> </button>
+              </div>
+              </form>
+          </div>
+          <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
   </div>
   <!-- /.content-wrapper -->
 

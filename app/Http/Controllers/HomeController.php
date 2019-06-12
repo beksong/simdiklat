@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -74,6 +75,35 @@ class HomeController extends Controller
     {
         $picture = Storage::url($picture);
         return $picture;
+    }
+
+    public function changepassword(Request $request)
+    {
+        if($request==null){
+            return redirect()->back()->with('message','Data yang anda kirimkan kosong');
+        }
+
+        $password = $request->get('password');
+        $cpassword = $request->get('confirm_password');
+
+        if($password == null){
+            return redirect()->back()->with('message','Pasword Kosong');
+        } 
+
+        if($cpassword == null){
+            return redirect()->back()->with('message','Pasword Konfirmasi Kosong');
+        }
+
+        if($password != $cpassword){
+            return redirect()->back()->with('message','Pasword konfirmasi berbeda');
+        }
+
+        $user = \Auth::user();
+        $user->update([
+            'password' => Hash::make($password),
+        ]);
+
+        return redirect()->back()->with('message','Pasword Telah diubah');
     }
 
 }

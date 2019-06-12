@@ -12,6 +12,14 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
         <!-- </head> -->
+        <style>
+         #help{
+             background-color : #c2c2a3;
+         }
+         .black-li{
+             color:black;
+         }
+        </style>
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,6 +40,7 @@
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="nav navbar-nav">
                         <li><a href="#"> BPSDM SULAWESI TENGAH</a></li>
+                        <!-- <li><a href="#help">Bantuan</a></li> -->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{ route('login')}}"> Masuk</a></li>
@@ -123,6 +132,31 @@
                 </div>
             </div>
         </div>
+
+        <div class="row" id="help">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="page-header text-center">
+                    <i><h3>Bantuan</h3></i>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div>
+                    <ol>
+                        <li>
+                            <a href="https://youtu.be/zxgREGtFyNg" class="black-li" target="_blank">Cara melakukan registrasi dan login ke SIMPEL ( Sistem informasi manajemen pelatihan )</a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/Yf0kLHjI134" class="black-li" target="_blank">Cara memperbaiki profile pada SIMPEL</a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/H1wMHRnHk1I" class="black-li" target="_blank"> Cara mendaftar pelatihan dan mencetak biodata calon peserta</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
         <script src="{{ asset('js/app.js') }}"></script>
         <!-- </body></html> -->
     </body>
