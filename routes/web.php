@@ -165,6 +165,9 @@ Route::get('participant-history','TrainingRegistrationController@participanthist
 Route::get('getparticipanthistory','TrainingRegistrationController@getparticipanthistory')->name('getparticipanthistory');
 // print registration
 Route::get('training/printregistration/{id}','TrainingRegistrationController@printregistration')->name('printregistration');
+// training print masterschedules
+Route::get('/printschedules/{id}','TrainingController@printmasterschedules')->name('printmasterschedules');
+Route::get('/training/printschedules/{id}','TrainingController@printmasterschedules');
 /**
  * here is admin bkpsdm route
  */

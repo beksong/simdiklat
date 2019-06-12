@@ -38,6 +38,13 @@
                 </thead>
                 <tbody>
                     @foreach($mschedule->detailschedules as $key => $schedule )
+                        @if($schedule->sessionschedule=='1')
+                            <tr align="center">
+                                <td colspan="8">
+                                    <b>Agenda Pembelajaran Tanggal : {{ \Carbon\Carbon::parse($schedule->dateschedule)->format('d-m-Y') }} </b>
+                                </td>
+                            </tr>
+                        @endif
                         <tr>
                             <td>{{ $key+1 }}</td>
                             <td>{{ \Carbon\Carbon::parse($schedule->dateschedule)->format('d-m-Y') }}</td>
@@ -48,20 +55,11 @@
                             <td>Sesi Ke-{{ $schedule->sessionschedule }}</td>
                             <td>{{ $schedule->description }}</td>
                         </tr>
-                        @if($schedule->sessionschedule!='4')
-                            <tr align="center">
-                                <td colspan="8">
-                                    Break
-                                </td>
-                            </tr>
-                        @endif
-                        @if($schedule->sessionschedule=='4')
-                            <tr align="center">
-                                <td colspan="8">
-                                    {{ \Carbon\Carbon::parse($schedule->dateschedule)->format('d-m-Y') }}
-                                </td>
-                            </tr>
-                        @endif
+                        <tr>
+                            <td align="center" colspan="8">
+                                <b>Break</b>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

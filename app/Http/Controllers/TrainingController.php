@@ -226,8 +226,8 @@ class TrainingController extends Controller
         $participants = Participant::where('training_id',$training_id)->orderBy('fullname','asc')->get();
         $pdf = PDF::loadView('report.training.participant-absen',compact('participants','training'));
         $pdf->setOrientation('portrait');
-        //return $pdf->download('absen.pdf');
-        return view('report.training.participant-absen',compact('participants','training'));
+        return $pdf->download('absen_'.$training->name.'_'.Carbon::now().'_'.'.pdf');
+        //return view('report.training.participant-absen',compact('participants','training'));
     }
     /**
      * here is admin export participant data into excel
@@ -299,5 +299,13 @@ class TrainingController extends Controller
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xls');
         $writer->save('php://output');
+    }
+
+    public function printmasterschedules($id)
+    {
+        $training = Training::find($id);
+        $pdf = PDF::loadView('report.schedules.masterschedule',compact('training'));
+        $pdf->setOrientation('landscape');
+        return $pdf->download('Jadwal'.$training->name.'_'.Carbon::now().'_'.'.pdf');
     }
 }

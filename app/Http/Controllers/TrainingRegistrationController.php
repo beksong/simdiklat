@@ -8,6 +8,7 @@ use App\Training;
 use App\Participant;
 use DataTables;
 use Storage;
+use PDF;
 
 use App\Http\Requests\RegisterTrainingRequest;
 
@@ -141,10 +142,14 @@ class TrainingRegistrationController extends Controller
         return redirect('training/openregistration')->with('message','Berhasil merubah data');
     }
 
+    //user print registration evidence from here
     public function printregistration($id)
     {
         $participant = Participant::find($id);
-        return view('report.registration.registration',compact('participant'));
+        $pdf = PDF::loadView('report.registration.registration',compact('participant'))
+        ->setPaper('a4')
+        ->setOrientation('portrait');
+        return $pdf->download('biodata_peserta_'.$participant->fullname.'.pdf');
     }
 
     // user as participant in training and training

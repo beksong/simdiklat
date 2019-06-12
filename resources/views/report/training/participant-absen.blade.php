@@ -24,8 +24,8 @@
 </div>
 <div class="row">
     <div class="report-wrapper">
+        <p>Tanggal : {{\Carbon\Carbon::now()->format('d-m-Y')}}</p>
        <div class="table-responsive">
-           <p>Tanggal : {{\Carbon\Carbon::now()->format('d-m-Y')}}</p>
            <table class="table table-bordered">
                <thead>
                    <tr>

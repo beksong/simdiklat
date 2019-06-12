@@ -94,11 +94,24 @@ class ScheduleController extends Controller
 
     public function savedetail(ScheduleRequest $request)
     {
+        // check if dateschedule that being registered are still on range of training date
+        $masterschedule = Masterschedule::find($request->get('masterschedule_id'));
+        $training = Training::find($masterschedule->training_id);
+
         $tanggal = Carbon::parse($request->get('dateschedule'));
+        if( $tanggal < $training->start_date){
+            return redirect()->back()->with('message','Tanggal jadwal tidak boleh lebih kecil dari tanggal awal diklat');
+        }
+
+        if($tanggal > $training->end_date){
+            return redirect()->back()->with('message','Tanggal jadwal tidak boleh melewati tanggal penutupan diklat');
+        }
+
         //check weekend
         if($tanggal->isWeekend()){
             return redirect()->back()->with('message','Hari Minggu tidak bisa dipilih sebagai hari diklat');
         }
+        
         $isHoliday = new TanggalMerah();
         //check tanggal merah nasional 
         $isHoliday->set_date($tanggal);
@@ -200,7 +213,7 @@ class ScheduleController extends Controller
     public function printdetailschedule($type,$mschedule_id)
     {
         $mschedule = Masterschedule::where('type',$type)->where('id',$mschedule_id)->firstOrFail();
-        return view('report.schedules.detailschedule',compact('mschedule'));
+        //return view('report.schedules.detailschedule',compact('mschedule'));
         $pdf = PDF::loadView('report.schedules.detailschedule',compact('mschedule'))
         ->setPaper('a4')
         ->setOrientation('landscape');

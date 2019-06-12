@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Storage;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -37,7 +38,12 @@ class HomeController extends Controller
     public function update(Request $req)
     {
         $foto=$req->file('foto');
-        $filename=preg_replace('/\s+/','_',$foto->getClientOriginalName());
+        // check if file request is empty
+        if(!$req->hasFile('foto')){
+            return redirect()->back()->with('message','Foto Tidak Boleh Kosong');
+        }
+
+        $filename=Carbon::now().'_'.preg_replace('/\s+/','_',$foto->getClientOriginalName());
         $user=\Auth::user();
 
         // check if file exist in storage and delete old file
