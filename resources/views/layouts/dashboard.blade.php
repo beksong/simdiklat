@@ -163,7 +163,8 @@
             <span>Management Peserta</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-red"></i>Data Peserta Diklat</a></li>
+            <li><a href="{{ route('trainingslist') }}"><i class="fa fa-circle-o text-red"></i>Diklat Yang sedang Berlangsung</a></li>
+            <li><a href="{{ route('closedtraininglist') }}"><i class="fa fa-circle-o text-red"></i>Diklat Yang Lalu</a></li>
           </ul>
         </li>
         @endpermission
@@ -184,7 +185,8 @@
             <span>Management Peserta</span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('traininglistbkpsdm') }}"><i class="fa fa-circle-o text-blue"></i>Data Peserta Diklat</a></li>
+            <li><a href="{{ route('currenttraininglistbkpsdm') }}"><i class="fa fa-circle-o text-blue"></i>Diklat Yang Sedang Berlangsung</a></li>
+            <li><a href="{{ route('traininglistbkpsdm') }}"><i class="fa fa-circle-o text-blue"></i>Diklat Yang lalu</a></li>
           </ul>
         </li>
         @endrole

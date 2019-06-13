@@ -9,7 +9,7 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Management Peserta</li>
-        <li class="active">Semua diklat</li>
+        <li class="active">Diklat yang pernah dibuka / yang lalu</li>
     </ol>
 </section>
 <!-- main content -->
@@ -43,7 +43,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Data pelatihan yang pernah dibuka/yang lalu</h3>
+                    <h3 class="box-title">Diklat yang pernah dibuka / yang lalu</h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tb-openedregistration" class="table table-striped table-bordered">
@@ -54,6 +54,7 @@
                                 <th>Tanggal Mulai</th>
                                 <th>Lama Diklat (hari)</th>
                                 <th>Tanggal Selesai</th>
+                                <th>Penyelenggara</th>
                                 <th>Calon Peserta</th>
                             </tr>
                         </thead>
@@ -79,7 +80,7 @@
             info        : true,
             autoWidth   : false,
             ajax : {
-                url : '{!! route('getregisteredparticipantbkpsdm') !!}',
+                url : '{!! route('getclosedtraininglist') !!}',
                 dataType : 'json'
             },
             fnCreatedRow: function (row, data, index) {
@@ -91,6 +92,7 @@
                 { data : "startingdate",name : 'startingdate'},
                 { data : "period",name : 'period'},
                 { data : "enddate",name : 'enddate'},
+                { data : "pic.institution.name",name: 'pic.institution.name'},
                 { data : "participant",name : "participant",orderable : false, searchable : false},
             ],
         });

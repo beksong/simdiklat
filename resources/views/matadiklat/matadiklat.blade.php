@@ -73,7 +73,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Daftar Mata Diklat</h3>
                 </div>
-                <div class="box-body">
+                <div class="box-body table-responsive">
                     <table id="tb-subjects" class="table table-striped table-bordered">
                         <thead>
                             <tr>

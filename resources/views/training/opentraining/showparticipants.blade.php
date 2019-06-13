@@ -61,6 +61,9 @@
                                 <th>Alamat Kantor</th>
                                 <th>Telepon Kantor</th>
                                 <th>Persyaratan</th>
+                                <th>Judul Proyek Perubahan/Aktualisasi</th>
+                                <th>Abstract Proyek Perubahan/Aktualisasi</th>
+                                <th>File Proyek Perubahan/Aktualisasi</th>
                                 <th>action</th>
                             </tr>
                         </thead>
@@ -195,6 +198,9 @@
                 { data : "institution_address",name: 'institution_address'},
                 { data : "institution_phone",name: 'institution_phone'},
                 { data : "requirementsdocs",name: 'requirementsdocs'},
+                { data : "propername",name: 'propername'},
+                { data : "abstractfile",name: 'abstractfile'},
+                { data : "docsfile",name: 'docsfile'},
                 { data : "action",name : "action",orderable : false, searchable : false},
             ]
         });

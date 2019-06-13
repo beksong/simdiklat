@@ -107,9 +107,12 @@ Route::put('updatetrainings','TrainingController@edit')->name('trainings');
 Route::delete('trainings','TrainingController@destroy')->name('trainings');
 // training route for admin to get all participants start here
 Route::get('traininglist','TrainingController@traininglist')->name('trainingslist');
+// get training that already closed and all participants route
+Route::get('closedtraininglist','TrainingController@closedtraininglist')->name('closedtraininglist');
+Route::get('getclosedtraininglist','TrainingController@getclosedtraininglist')->name('getclosedtraininglist');
 // admin get all registered participant
 Route::get('training/showparticipants/{training_id}','TrainingController@showparticipants')->name('showparticipants');
-// ajax datatables for admin to get all opened trainings
+// ajax datatables for admin to get all opened trainings that currenly running
 Route::get('getregisteredparticipants','TrainingController@getregisteredparticipants')->name('getregisteredparticipants');
 // ajax datatables for admin to get all regsitered participants
 Route::get('getalreadyregisteredparticipants','TrainingController@getalreadyregisteredparticipants')->name('getalreadyregisteredparticipants');
@@ -178,3 +181,5 @@ Route::get('training/bkpsdm','AdminBkpsdmController@index')->name('trainingbkpsd
 Route::get('gettrainingbkpsdm','AdminBkpsdmController@gettrainingbkpsdm')->name('gettrainingbkpsdm');
 Route::get('traininglistbkpsdm','AdminBkpsdmController@traininglistbkpsdm')->name('traininglistbkpsdm');
 Route::get('getregisteredparticipantbkpsdm','AdminBkpsdmController@getregisteredparticipantbkpsdm')->name('getregisteredparticipantbkpsdm');
+Route::get('currenttraininglistbkpsdm','AdminBkpsdmController@currenttraininglistbkpsdm')->name('currenttraininglistbkpsdm');
+Route::get('getcurrenttraininglistbkpsdm','AdminBkpsdmController@getcurrenttraininglistbkpsdm')->name('getcurrenttraininglistbkpsdm');

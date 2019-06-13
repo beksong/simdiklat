@@ -40,7 +40,8 @@ class AdminBkpsdmController extends Controller
     }
 
     /**
-     * management participant of bkpsdm
+     * management participant of bkpsdm 
+     * here to get training that have been closed
      */
     public function traininglistbkpsdm()
     {
@@ -50,7 +51,27 @@ class AdminBkpsdmController extends Controller
     public function getregisteredparticipantbkpsdm()
     {
         $id = \Auth::user()->pic()->firstOrFail();
-        $trainings = Training::where('pic_id',$id->id)->where('start_date','<',Carbon::now())->Where('end_date','>',Carbon::now(-7))->orderBy('start_date','asc')->get();
+        $trainings = Training::where('pic_id',$id->id)->where('end_date','<',Carbon::now())->orderBy('start_date','asc')->get();
+        return DataTables::of($trainings)
+        ->addColumn('participant',function($training){
+            return view('training.opentraining.tbbutton',compact('training'));
+        })->addColumn('startingdate',function($training){
+            return Carbon::parse($training->start_date)->format('d-m-Y');
+        })->addColumn('enddate',function($training){
+            return Carbon::parse($training->end_date)->format('d-m-Y');
+        })->rawColumns(['participant','startingdate','enddate'])->toJson();
+    }
+
+    // view data for currently running training to bkpsdm admins
+    public function currenttraininglistbkpsdm()
+    {
+        return view('adminbkpsdm.participantmanagement.currenttraininglistbkpsdm');
+    }
+
+    public function getcurrenttraininglistbkpsdm()
+    {
+        $id = \Auth::user()->pic()->firstOrFail();
+        $trainings = Training::where('pic_id',$id->id)->Where('end_date','>',Carbon::now(-7))->orderBy('start_date','asc')->get();
         
         return DataTables::of($trainings)
         ->addColumn('participant',function($training){

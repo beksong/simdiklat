@@ -146,6 +146,7 @@ class TrainingController extends Controller
         })->rawColumns(['printschedules','schedule','action','startingdate','enddate'])->toJson();
     }
 
+    // here for admin to get data of participant and currently running trainings
     public function traininglist()
     {
         return view('training.opentraining.index');
@@ -155,7 +156,29 @@ class TrainingController extends Controller
     {
         $trainings = Training::with(['Pic'=>function($query){
             $query->with('Institution');
-        }])->where('start_date','>',Carbon::now())->orWhere('end_date','>',Carbon::now(-7))->orderBy('start_date','asc')->get();
+        }])->Where('end_date','>',Carbon::now(-7))->orderBy('start_date','asc')->get();
+        
+        return DataTables::of($trainings)
+        ->addColumn('participant',function($training){
+            return view('training.opentraining.tbbutton',compact('training'));
+        })->addColumn('startingdate',function($training){
+            return Carbon::parse($training->start_date)->format('d-m-Y');
+        })->addColumn('enddate',function($training){
+            return Carbon::parse($training->end_date)->format('d-m-Y');
+        })->rawColumns(['participant','startingdate','enddate'])->toJson();
+    }
+
+    // here for admin to get last training and the participant that already closed
+    public function closedtraininglist()
+    {
+        return view('training.opentraining.closedtraininglist');
+    }
+
+    public function getclosedtraininglist()
+    {
+        $trainings = Training::with(['Pic'=>function($query){
+            $query->with('Institution');
+        }])->Where('end_date','<',Carbon::now(-7))->orderBy('start_date','asc')->get();
         
         return DataTables::of($trainings)
         ->addColumn('participant',function($training){
@@ -181,10 +204,22 @@ class TrainingController extends Controller
         return DataTables::of($participants)
         ->addColumn('requirementsdocs',function($participant){
             return '<a href="../../storage/requirement/'.$participant->requirements.'">'.$participant->requirements.'</a>';
+        })->addColumn('abstractfile',function($participant){
+            if($participant->properabstract=='belum ada data'){
+                return 'belum ada data';
+            }else{
+                return '<a href="storage/proper/'.$participant->properabstract.'">'.$participant->properabstract.'</a>';
+            }
+        })->addColumn('docsfile',function($participant){
+            if ($participant->properdocs=='belum ada data') {
+                return 'belum ada data';
+            } else {
+                return '<a href="storage/proper/'.$participant->properdocs.'">'.$participant->properdocs.'</a>';
+            }
         })
         ->addColumn('action',function($participant){
             return view('training.opentraining.tbbuttonparticipant',compact('participant'));
-        })->rawColumns(['requirementsdocs','action'])->toJson();
+        })->rawColumns(['requirementsdocs','abstractfile','docsfile','action'])->toJson();
     }
 
     // get trainings list for admin select2
@@ -278,7 +313,7 @@ class TrainingController extends Controller
             ->setCellValue('L'.($key+2), $p->user->gender=='Laki-laki' ? 'L' : 'P')
             ->setCellValue('M'.($key+2), $p->religion)
             ->setCellValue('N'.($key+2), $pangkat[0])
-            ->setCellValue('O'.($key+2), $pangkat[1])
+            ->setCellValue('O'.($key+2), strtoupper($pangkat[1]))
             ->setCellValue('P'.($key+2), $p->user->address)
             ->setCellValue('Q'.($key+2), $p->institution_address)
             ->setCellValue('R'.($key+2), $p->institution_phone);

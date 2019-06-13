@@ -77,7 +77,7 @@
                         <div class="item">
                             <img src="{{ url('images/banner3.jpg') }}" alt="banner1" class="img-responsive">
                             <div class="carousel-caption">
-                                <h3>SISTEM INFORMASI DIKLAT</h3>
+                                <h3>SISTEM INFORMASI MANAJEMEN PELATIHAN</h3>
                             </div>
                         </div>
                     </div>
@@ -151,6 +151,9 @@
                         </li>
                         <li>
                             <a href="https://youtu.be/H1wMHRnHk1I" class="black-li" target="_blank"> Cara mendaftar pelatihan dan mencetak biodata calon peserta</a>
+                        </li>
+                        <li>
+                            <a href="https://youtu.be/RbMg2nJ_mXM" class="black-li" target="_blank"> Cara mengupload file laporan aktualisasi atau file laporan proyek perubahan</a>
                         </li>
                     </ol>
                 </div>

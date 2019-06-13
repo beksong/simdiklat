@@ -88,7 +88,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Pembicara / Pemateri / Pengampu mata diklat</h3>
                 </div>
-                <div class="box-body">
+                <div class="box-body table-responsive">
                     <table id="tb-speaker" class="table table-striped table-bordered">
                         <thead>
                             <tr>

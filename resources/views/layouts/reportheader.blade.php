@@ -26,7 +26,7 @@
             <h4 style="text-align:center;">PEMERINTAH PROVINSI SULAWESI TENGAH</h4>
             <h5 style="text-align:center;">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA DAERAH</h5>
             <p style="text-align:center;">Jl. S. Parman No. 67 Telp. ( 0451 ) 421292 Fax. ( 0451 ) 428116 </p>
-            <p style="text-align:center;"> website : bspdm.sutengprov.go.id </p>
+            <p style="text-align:center;"> website : bspdm.sultengprov.go.id </p>
         </div>
     </div>
     <div class="row">

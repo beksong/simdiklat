@@ -25,7 +25,7 @@
 <div class="row">
     <div class="report-wrapper">
         <p>Tanggal : {{\Carbon\Carbon::now()->format('d-m-Y')}}</p>
-       <div class="table-responsive">
+       <div>
            <table class="table table-bordered">
                <thead>
                    <tr>
@@ -38,10 +38,14 @@
                <tbody>
                    @foreach($participants as $key=>$p)
                         <tr>
-                            <td>{{ $key+1 }}.</td>
-                            <td>{{ $p->fullname }} <br>NIP : {{ $p->user->nip }}</td>
-                            <td>{{ $p->institution }}</td>
-                            <td>{{ $key+1 }}.</td>
+                            <td style="height:50px;">{{ $key+1 }}.</td>
+                            <td style="height:50px;">{{ $p->fullname }} <br>NIP : {{ $p->user->nip }}</td>
+                            <td style="height:50px;">{{ $p->institution }}</td>
+                            @if(($key+1)%2==0)
+                                <td style="height:50px;"><center>{{ $key+1 }}.</center></td>
+                            @else
+                                <td style="height:50px;">{{ $key+1 }}.</td>
+                            @endif
                         </tr>
                    @endforeach
                </tbody>

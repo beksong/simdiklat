@@ -9,7 +9,7 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li>Management Peserta</li>
-        <li class="active">Semua diklat</li>
+        <li class="active">Diklat yang sedang dibuka/sedang berjalan</li>
     </ol>
 </section>
 <!-- main content -->
@@ -43,7 +43,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Data pelatihan yang pernah dibuka/yang lalu</h3>
+                    <h3 class="box-title">Data semua diklat yang sedang dibuka/sedang berjalan</h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tb-openedregistration" class="table table-striped table-bordered">
@@ -79,7 +79,7 @@
             info        : true,
             autoWidth   : false,
             ajax : {
-                url : '{!! route('getregisteredparticipantbkpsdm') !!}',
+                url : '{!! route('getcurrenttraininglistbkpsdm') !!}',
                 dataType : 'json'
             },
             fnCreatedRow: function (row, data, index) {
