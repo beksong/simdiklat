@@ -60,7 +60,7 @@ class TrainingRegistrationController extends Controller
     {
         $storage = Storage::disk('requirement');
         $file = $request->file('requirements');
-        $filename=preg_replace('/\s+/','_',$file->getClientOriginalName());
+        $filename=Carbon::now().'_'.preg_replace('/\s+/','_',$file->getClientOriginalName());
         $participant = new Participant(array(
             'user_id' => \Auth::user()->id,
             'phone' => $request->get('phone'),
@@ -71,6 +71,7 @@ class TrainingRegistrationController extends Controller
             'rank' => $request->get('rank'), //pangkat,golru
             'position' => $request->get('position'),//jabatan
             'institution' => $request->get('institution'), //institusi asal
+            'unit_institution' => $request->get('unit_institution'),//sub unit instansi
             'institution_address' => $request->get('institution_address'),
             'institution_phone' => $request->get('institution_phone'),
             'requirements' => $filename
@@ -89,7 +90,7 @@ class TrainingRegistrationController extends Controller
         $file = $request->file('requirements');
         //delete old file
         if(!empty($file)){
-            $filename=preg_replace('/\s+/','_',$file->getClientOriginalName());
+            $filename=Carbon::now().'_'.preg_replace('/\s+/','_',$file->getClientOriginalName());
             if ($participant->requirements!='') {
                 $storage->delete($participant->requirements);
 
@@ -103,6 +104,7 @@ class TrainingRegistrationController extends Controller
                     'rank' => $request->get('rank'), //pangkat,golru
                     'position' => $request->get('position'),//jabatan
                     'institution' => $request->get('institution'), //institusi asal
+                    'unit_institution' => $request->get('unit_institution'),//sub unit instansi
                     'institution_address' => $request->get('institution_address'),
                     'institution_phone' => $request->get('institution_phone'),
                     'requirements' => $filename
@@ -118,6 +120,7 @@ class TrainingRegistrationController extends Controller
                     'rank' => $request->get('rank'), //pangkat,golru
                     'position' => $request->get('position'),//jabatan
                     'institution' => $request->get('institution'), //institusi asal
+                    'unit_institution' => $request->get('unit_institution'),//sub unit instansi
                     'institution_address' => $request->get('institution_address'),
                     'institution_phone' => $request->get('institution_phone'),
                     'requirements' => $filename
@@ -135,6 +138,7 @@ class TrainingRegistrationController extends Controller
                 'rank' => $request->get('rank'), //pangkat,golru
                 'position' => $request->get('position'),//jabatan
                 'institution' => $request->get('institution'), //institusi asal
+                'unit_institution' => $request->get('unit_institution'),//sub unit instansi
                 'institution_address' => $request->get('institution_address'),
                 'institution_phone' => $request->get('institution_phone'),
             ]);
@@ -204,7 +208,7 @@ class TrainingRegistrationController extends Controller
             //delete old file
             $storage->delete($participant->properdocs);
             //update and upload file
-            $properdocsname=preg_replace('/\s+/','_',$properdocs->getClientOriginalName());
+            $properdocsname=Carbon::now().'_'.preg_replace('/\s+/','_',$properdocs->getClientOriginalName());
             $participant->update([
                 'propername' => $request->get('propername'),
                 'properdocs' => $properdocsname,
@@ -218,7 +222,7 @@ class TrainingRegistrationController extends Controller
             //delete old file first
             $storage->delete($participant->properabstract);
             //update and upload file
-            $properabstractname=preg_replace('/\s+/','_',$properabstract->getClientOriginalName());
+            $properabstractname=Carbon::now().'_'.preg_replace('/\s+/','_',$properabstract->getClientOriginalName());
             $participant->update([
                 'properabstract'=>$properabstractname
             ]);

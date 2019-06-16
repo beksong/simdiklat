@@ -44,6 +44,8 @@
         <div class="col-xs-8 spacing">: {{ $participant->position }}</div>
         <div class="col-xs-4 spacing">Instansi</div>
         <div class="col-xs-8 spacing">: {{ $participant->institution }}</div>
+        <div class="col-xs-4 spacing">Sub Unit Instansi</div>
+        <div class="col-xs-8 spacing">: {{ $participant->unit_institution }}</div>
         <div class="col-xs-4 spacing">Alamat Kantor</div>
         <div class="col-xs-8 spacing">: {{ $participant->institution_address }}</div>
         <div class="col-xs-4 spacing">Telepon Kantor</div>

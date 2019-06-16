@@ -15,13 +15,14 @@ class CreateTrainingsTable extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->text('name');
             $table->string('slug');
             $table->date('start_date');
             $table->integer('period')->unsigned();
             $table->date('end_date');
             $table->integer('pic_id')->unsigned();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('training_type')->default('latsar');
             $table->string('status')->default('active');//status apakah diklat masih aktif atau telah selesai
             $table->timestamps();
 

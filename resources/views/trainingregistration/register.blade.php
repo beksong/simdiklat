@@ -147,10 +147,23 @@
                             <div class="form-group has-feedback">
                                 <label for="institution" class="col-sm-3 control-label">Unit Kerja saat ini</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="institution" name="institution" class="form-control pull-right {{ $errors->has('institution') ? ' is-invalid' : '' }}" value ="{{ $participant!=null ? $participant->institution : ''}}" aria-describedby="helpBlock6" placeholder="Unit kerja saat ini ex: Badan Pemberdayaan Perempuan Kab. Donggala... (wajib isi)" required>
+                                    <input type="text" id="institution" name="institution" class="form-control pull-right {{ $errors->has('institution') ? ' is-invalid' : '' }}" value ="{{ $participant!=null ? $participant->institution : ''}}" aria-describedby="helpBlock6" placeholder="Unit kerja saat ini ex: Pemerintah Kabupaten Poso...(wajib isi)" required>
                                     <span class="form-control-feedback"></span>
                                     @if($errors->has('institution'))
                                         <span id="helpBlock6" class="help-block"><strong>{{ $errors->first('institution') }}</strong></span> 
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group has-feedback">
+                                <label for="unit_institution" class="col-sm-3 control-label">Sub Unit Kerja saat ini</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="unit_institution" name="unit_institution" class="form-control pull-right {{ $errors->has('unit_institution') ? ' is-invalid' : '' }}" value ="{{ $participant!=null ? $participant->unit_institution : ''}}" aria-describedby="helpBlock6" placeholder="Sub Unit kerja saat ini ex: Dinas Perikanan...(wajib isi)" required>
+                                    <span class="form-control-feedback"></span>
+                                    @if($errors->has('unit_institution'))
+                                        <span id="helpBlock6" class="help-block"><strong>{{ $errors->first('unit_institution') }}</strong></span> 
                                     @endif
                                 </div>
                             </div>

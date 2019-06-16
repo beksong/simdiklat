@@ -25,6 +25,7 @@ class CreateParticipantsTable extends Migration
             $table->string('rank')->nullable();//pangkat
             $table->string('position')->nullable();//jabatan
             $table->string('institution')->nullable();//instansi asal
+            $table->string('unit_institution')->nullable();//unit instansi
             $table->string('institution_address')->nullable();//alamat instansi
             $table->string('institution_phone')->nullable();//telepon instansi
             $table->string('requirements')->nullable(); //document requirements for registration
