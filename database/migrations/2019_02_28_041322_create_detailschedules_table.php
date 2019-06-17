@@ -26,6 +26,7 @@ class CreateDetailschedulesTable extends Migration
             $table->string('rpbmd')->nullable();
             $table->string('teaching_material')->nullable();
             $table->string('airing_material')->nullable();
+            $table->string('uniqueschedule')->nullable();
             $table->timestamps();
 
             $table->foreign('masterschedule_id')->references('id')->on('masterschedules')->onDelete('cascade')->onUpdate('cascade');

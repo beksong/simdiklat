@@ -28,10 +28,10 @@
                     <tr>
                         <td>No.</td>
                         <td>Tanggal</td>
-                        <td>Materi</td>
-                        <td>Pemateri/Widyaiswara</td>
                         <td>Jam</td>
-                        <td>JP</td>
+                        <td>Materi Pembelajaran</td>
+                        <td>Jumlah JP</td>
+                        <td>Fasilitator/Narasumber</td>
                         <td>Sesi</td>
                         <td>Keterangan</td>
                     </tr>
@@ -48,10 +48,10 @@
                         <tr>
                             <td>{{ $key+1 }}</td>
                             <td>{{ \Carbon\Carbon::parse($schedule->dateschedule)->format('d-m-Y') }}</td>
-                            <td>{{ $schedule->subject->name}}</td>
-                            <td>{{ $schedule->user->name }}</td>
                             <td>{{ $schedule->timeschedule }}</td>
+                            <td>{{ $schedule->subject->name}}</td>
                             <td>{{ $schedule->jp }}</td>
+                            <td>{{ $schedule->user->name }}</td>
                             <td>Sesi Ke-{{ $schedule->sessionschedule }}</td>
                             <td>{{ $schedule->description }}</td>
                         </tr>

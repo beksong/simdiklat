@@ -16,6 +16,7 @@ class CreateInstitutionsTable extends Migration
         Schema::create('institutions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('unit_name')->default('Pemerintah Provinsi Sulawesi Tengah');
             $table->string('slug');
             $table->timestamps();
         });

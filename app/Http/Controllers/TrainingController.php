@@ -261,12 +261,9 @@ class TrainingController extends Controller
         $training=Training::find($training_id);
         $participants = Participant::where('training_id',$training_id)->orderBy('fullname','asc')->get();
         $institution = Institution::find($training->pic->institution_id);
-        return view('report.training.participant-absen',compact('participants','training','institution'));
-        
-        $pdf = PDF::loadView('report.training.participant-absen',compact('participants','training'));
+        $pdf = PDF::loadView('report.training.participant-absen',compact('participants','training','institution'));
         $pdf->setOrientation('portrait');
         return $pdf->download('absen_'.$training->name.'_'.Carbon::now().'_'.'.pdf');
-        //return view('report.training.participant-absen',compact('participants','training'));
     }
     /**
      * here is admin export participant data into excel
