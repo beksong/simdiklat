@@ -42,7 +42,7 @@
         <div class="col-md-4 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tambah Data Jadwal Diklat</h3>
+                    <h3 class="box-title">Tambah Data Jadwal Mengajar Widyaiswara</h3>
                 </div>
                 <!-- form profile -->
                 <form action="{{ route('savedetailschedule') }}" method="post">
@@ -141,6 +141,16 @@
                             @endif
                         </div>
                     </div>
+
+                    <div class="box-body">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox" id="toprint" name="toprint" value="1"> Tambahkan ke daftar cetak
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -153,7 +163,7 @@
         <div class="col-md-8 col-sm-12 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Detail Jadwal {{$mschedule->type}} / {{$mschedule->nameschedulemaster}}, {{$mschedule->training->name}}</h3>
+                    <h3 class="box-title">Detail Jadwal Widyaiswara {{$mschedule->nameschedulemaster}}, {{$mschedule->training->name}}</h3>
                 </div>
                 <div class="box-body table-responsive">
                     <table id="tb-schedules" class="table table-striped table-bordered">
@@ -172,6 +182,33 @@
                         </thead>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- row for table schedule -->
+    <div class="row">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <a href="#newprinted" data-toggle="modal" class="btn btn-success"> <i class="fa fa-plus"></i> Tambah detail cetak</a>
+                <h3 class="box-title">Jadwal {{$mschedule->nameschedulemaster}}, {{$mschedule->training->name}}</h3>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="tb-printedschedules" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal Diklat</th>
+                            <th>Pemateri</th>
+                            <th>Mata Diklat</th>
+                            <th>Jam</th>
+                            <th>Sesi</th>
+                            <th>JP</th>
+                            <th>Keterangan</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -329,6 +366,208 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<!-- modal newprinted -->
+<div class="modal fade" id="newprinted" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Jadwal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{ route('newprintedschedule') }}" method="POST">
+                    @csrf
+                    <input type="hidden" value="{{ $mschedule->id }}" name="masterschedule_id" id="masterschedule_id">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Tanggal</label>
+
+                                    <input type="text" id="printednewdateschedule" name="dateschedule" data-date-format="yyyy-mm-dd" class="form-control{{ $errors->has('dateschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock1" placeholder="Tanggal mata diklat diajarkan" required>
+                                    <span class="fa fa-calendar form-control-feedback"></span>
+                                    @if($errors->has('dateschedule'))
+                                        <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('dateschedule') }}</strong></span> 
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Pemateri/Narasumber</label>
+                                    <input type="text" id="speaker" name="speaker" placeholder="Isikan Pemateri : TNI,Narasumber,Sekkab..." class="form-control">
+                                    <span class="fa fa-user form-control-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Materi Pembelajaran</label>
+                                    <input type="text" id="subject" name="subject" placeholder="Isikan Materi : Coffee break, PBB, Kearifan lokal..." class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Jam</label>
+
+                                    <input type="text" id="timeschedule" name="timeschedule" class="datepicker form-control{{ $errors->has('timeschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock4" placeholder="jam pelaksanaan ex. 07:00-12.00...">
+                                    <span class="fa fa-clock-o form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- right side modal -->
+                        <div class="col-sm-6">
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Jumlah JP</label>
+
+                                    <input type="number" min="1" id="jp" name="jp" class="form-control{{ $errors->has('jp') ? ' is-invalid' : '' }}" aria-describedby="helpBlock6" placeholder="isi dengan angka ex. 1, 2,...">
+                                    <span class="fa fa-calculator form-control-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Keterangan</label>
+
+                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="isi dengan keterangan lain yang diperlukan untuk ditampilkan dalam jadwal diklat" aria-describedby="helpBlock7"></textarea>
+                                    <span class="fa fa-edit form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            <div class="modal-footer">
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal update printed schedule-->
+<div class="modal fade" id="updateprintedschedule" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ubah data jadwal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{{ route('newprintedschedule') }}" method="POST">
+                    @csrf
+                    {{ method_field('PUT') }}
+                    <input type="hidden" value="{{ $mschedule->id }}" name="masterschedule_id" id="masterschedule_id">
+                    <input type="hidden" name="printedshcedule_id" id="printedshcedule_id">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Tanggal</label>
+
+                                    <input type="text" id="printednewdateschedule" name="dateschedule" data-date-format="yyyy-mm-dd" class="form-control{{ $errors->has('dateschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock1" placeholder="Tanggal mata diklat diajarkan" required>
+                                    <span class="fa fa-calendar form-control-feedback"></span>
+                                    @if($errors->has('dateschedule'))
+                                        <span id="helpBlock1" class="help-block"><strong>{{ $errors->first('dateschedule') }}</strong></span> 
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Pemateri/Narasumber</label>
+                                    <input type="text" id="speaker" name="speaker" placeholder="Isikan Pemateri : TNI,Narasumber,Sekkab..." class="form-control">
+                                    <span class="fa fa-user form-control-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Materi Pembelajaran</label>
+                                    <input type="text" id="subject" name="subject" placeholder="Isikan Materi : Coffee break, PBB, Kearifan lokal..." class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Jam</label>
+
+                                    <input type="text" id="timeschedule" name="timeschedule" class="datepicker form-control{{ $errors->has('timeschedule') ? ' is-invalid' : '' }}" aria-describedby="helpBlock4" placeholder="jam pelaksanaan ex. 07:00-12.00...">
+                                    <span class="fa fa-clock-o form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- right side modal -->
+                        <div class="col-sm-6">
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Jumlah JP</label>
+
+                                    <input type="number" min="1" id="jp" name="jp" class="form-control{{ $errors->has('jp') ? ' is-invalid' : '' }}" aria-describedby="helpBlock6" placeholder="isi dengan angka ex. 1, 2,...">
+                                    <span class="fa fa-calculator form-control-feedback"></span>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="form-group has-feedback">
+                                    <label for="name" class="control-label">Keterangan</label>
+
+                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="isi dengan keterangan lain yang diperlukan untuk ditampilkan dalam jadwal diklat" aria-describedby="helpBlock7"></textarea>
+                                    <span class="fa fa-edit form-control-feedback"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            <div class="modal-footer">
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-danger fade" id="del_printedschedule">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Hapus Data</h4>
+            </div>
+            <div class="modal-body">
+            <p>Yakin Akan Jadwal?</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+            <form method="post" id="frm_delete_schedule" action="{{ route('newprintedschedule') }}">
+                    @csrf
+                    {{ method_field('DELETE')}}
+                    <input type="hidden" id="printedschedule_id" name="printedschedule_id">
+                    <button type="submit" class="btn btn-outline"> <i class="fa fa-btn fa-trash"></i> Hapus Data</button>
+            </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 @endsection
 
 @push('jscript')
@@ -336,6 +575,7 @@
 $(document).ready(function(){
     //  datepicker
     $('#dateschedule').datepicker({});
+    $('#printednewdateschedule').datepicker({});
     // select2 user
     $('#user_id').select2({
         placeholder : "Ketikkan nama user : ex. jhon, budi, andi irawati",
@@ -402,6 +642,38 @@ $(document).ready(function(){
             { data : "dateschedule",name : 'dateschedule'},
             { data : "user.name",name : 'user.name'},
             { data : "subject.name",name : 'subject.name'},
+            { data : "timeschedule",name : 'timeschedule'},
+            { data : "sessionschedule",name : 'sessionschedule'},
+            { data : "jp",name : 'jp'},
+            { data : "description",name : 'description'},
+            { data : "action",name : "action",orderable : false, searchable : false},
+        ],
+    });
+
+    // datatables for printed schedules
+    $('#tb-printedschedules').DataTable({
+        processing: true,
+        serverSide: true,
+        paging      : true,
+        lengthChange: true,
+        searching   : true,
+        ordering    : true,
+        info        : true,
+        autoWidth   : true,
+        ajax : {
+            type : 'GET',
+            url : '{!! route('getprintedschedules') !!}',
+            dataType : 'json',
+            data : {q: '{!! $mschedule->id !!}'}
+        },
+        fnCreatedRow: function (row, data, index) {
+            $('td', row).eq(0).html(index + 1);
+        },
+        columns : [
+            { data : null, sortable : false},
+            { data : "dateschedule",name : 'dateschedule'},
+            { data : "speaker",name : 'speaker'},
+            { data : "subject",name : 'subject'},
             { data : "timeschedule",name : 'timeschedule'},
             { data : "sessionschedule",name : 'sessionschedule'},
             { data : "jp",name : 'jp'},
@@ -509,6 +781,26 @@ $(function(){
         var lnk = $(e.relatedTarget);
 
         mdl.find('.modal-footer #schedule_id').val(lnk.data('schedule_id'));
+    });
+
+    $('#updateprintedschedule').on('show.bs.modal',function(e){
+        var mdl = $(this);
+        var lnk = $(e.relatedTarget);
+
+        mdl.find('.modal-body #printedshcedule_id').val(lnk.data('printedschedule_id'));
+        mdl.find('.modal-body #printednewdateschedule').val(lnk.data('dateschedule'));
+        mdl.find('.modal-body #speaker').val(lnk.data('speaker'));
+        mdl.find('.modal-body #subject').val(lnk.data('subject'));
+        mdl.find('.modal-body #timeschedule').val(lnk.data('timeschedule'));
+        mdl.find('.modal-body #description').val(lnk.data('description'));
+        mdl.find('.modal-body #jp').val(lnk.data('jp'));
+    });
+
+    $('#del_printedschedule').on('show.bs.modal',function(e){
+        var mdl = $(this);
+        var lnk = $(e.relatedTarget);
+
+        mdl.find('.modal-footer #printedschedule_id').val(lnk.data('printedschedule_id'));        
     });
 });
 

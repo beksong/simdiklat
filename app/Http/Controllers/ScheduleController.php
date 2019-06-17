@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Training;
 use App\Detailschedule;
 use App\Masterschedule;
+use App\Printedschedule;
+use App\Subject;
+use App\User;
 use DataTables;
 use Carbon\Carbon;
 use Grei\TanggalMerah;
@@ -123,6 +126,12 @@ class ScheduleController extends Controller
         //return $schedule;
         if($schedule->isEmpty()){
             // store data right here
+            if($request->get('toprint')==1){
+                $uniqueschedule = str_random('10').'_'.str_random('10');
+            }else{
+                $uniqueschedule ='';
+            }
+
             $schedule = new Detailschedule(array(
                 'masterschedule_id' => $request->get('masterschedule_id'),
                 'user_id' => $request->get('user_id'),
@@ -131,10 +140,31 @@ class ScheduleController extends Controller
                 'timeschedule' => $request->get('timeschedule'),
                 'sessionschedule' => $request->get('sessionschedule'),
                 'jp' => $request->get('jp'),
+                'uniqueschedule' => $uniqueschedule,
                 'description' => $request->get('description')
             ));
     
             $schedule->save();
+            // if users check option printed to schedule this code will work
+            // and will save to printedschedules tables
+            if($request->get('toprint')==1){
+                $subject = Subject::find($schedule->subject_id);
+                $speaker = User::find($schedule->user_id);
+
+                $printedschedule = new Printedschedule(array(
+                    'masterschedule_id' => $schedule->masterschedule_id,
+                    'dateschedule' => $schedule->dateschedule,
+                    'timeschedule' => $schedule->timeschedule,
+                    'subject' => $subject->name,
+                    'jp' => $schedule->jp,
+                    'sessionschedule' => $schedule->sessionschedule,
+                    'speaker' =>$speaker->name,
+                    'description' => $schedule->description,
+                    'uniqueschedule' =>$uniqueschedule
+                ));
+
+                $printedschedule->save();
+            }
             return redirect()->back()->with('message','Berhasil menyimpan data');
         }
 
@@ -191,6 +221,24 @@ class ScheduleController extends Controller
                     'description' => $request->get('description')
                 ]);
 
+                // update printed schedule table while the schedule changed by user
+                // so the printed keep synchronous with the detailschedule
+                if($schedule->uniqueschedule!=null){
+                    $subject = Subject::find($schedule->subject_id);
+                    $speaker = User::find($schedule->user_id);
+                    $printedschedule = Printedschedule::where('uniqueschedule',$schedule->uniqueschedule)->firstOrFail();
+                    $printedschedule->update([
+                        'masterschedule_id' => $schedule->masterschedule_id,
+                        'dateschedule' => $schedule->dateschedule,
+                        'timeschedule' => $schedule->timeschedule,
+                        'subject' => $subject->name,
+                        'jp' => $schedule->jp,
+                        'sessionschedule' => $schedule->sessionschedule,
+                        'speaker' =>$speaker->name,
+                        'description' => $schedule->description,
+                    ]);
+                }
+
                 return redirect()->back()->with('message','Berhasil Merubah Data');                
             }
             // return if someone has a schedule on current data
@@ -203,6 +251,12 @@ class ScheduleController extends Controller
     public function deletedetail(Request $request)
     {
         $detail= Detailschedule::find($request->get('schedule_id'));
+        // delete data on printedschedule if there belongs to detailschedule
+        if($detail->uniqueschedule!=null){
+            $printedschedule = Printedschedule::where('uniqueschedule',$detail->uniqueschedule)->firstOrFail();
+            $printedschedule->delete();
+        }
+        // delete detailschedule here
         $detail->delete();
         return redirect()->back()->with('message','Berhasil Menghapus Data');
     }
@@ -228,6 +282,63 @@ class ScheduleController extends Controller
         return DataTables::of($schedules)
         ->addColumn('action',function($schedule){
             return view('schedule.tbbutton',compact('schedule'));
+        })->toJson();
+    }
+
+    // printed schedules configuration start here
+
+    public function newprintedschedule(Request $req)
+    {
+        $printedschedule = new Printedschedule(array(
+            'masterschedule_id' => $req->get('masterschedule_id'),
+            'dateschedule' => $req->get('dateschedule'),
+            'timeschedule' => $req->get('timeschedule'),
+            'speaker' => $req->get('speaker'),
+            'subject' => $req->get('subject'),
+            'jp' => $req->get('jp'),
+            'description' => $req->get('description'),
+        ));
+
+        $printedschedule->save();
+
+        return redirect()->back()->with('message','Berhasil menyimpan data');
+    }
+
+    public function updatenewprintedschedule(Request $request)
+    {
+        //return $request->all();
+        $printedschedule = Printedschedule::find($request->get('printedshcedule_id'));
+        $printedschedule->update([
+            'masterschedule_id' => $request->get('masterschedule_id'),
+            'dateschedule' => $request->get('dateschedule'),
+            'timeschedule' => $request->get('timeschedule'),
+            'speaker' => $request->get('speaker'),
+            'subject' => $request->get('subject'),
+            'jp' => $request->get('jp'),
+            'description' => $request->get('description'),
+        ]);
+
+        return redirect()->back()->with('message','Berhasil merubah data');
+    }
+
+    public function deleteprintedschedule(Request $request)
+    {
+        $printedschedule = Printedschedule::find($request->get('printedschedule_id'));
+        $printedschedule->delete();
+        return redirect()->back()->with('message','Berhasil menghapus data');
+    }
+
+    public function getprintedschedules(Request $req)
+    {
+        $mschedule_id = $req->get('q');
+        $printedschedules = Printedschedule::where('masterschedule_id',$mschedule_id)->orderBy('dateschedule','asc')->get();
+        return DataTables::of($printedschedules)
+        ->addColumn('action',function($printedschedule){
+            if($printedschedule->uniqueschedule==null){
+                return view('schedule.tbbutton-printedschedule',compact('printedschedule'));
+            }else{
+                return 'Update data dari detail jadwal widyaiswara di tabel atas';
+            }
         })->toJson();
     }
 }

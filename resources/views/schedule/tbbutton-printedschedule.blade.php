@@ -1,0 +1,4 @@
+@if($printedschedule->uniqueschedule==null)
+<a href="#updateprintedschedule" class="badge bg-yellow" data-printedschedule_id="{{ $printedschedule->id }}" data-dateschedule="{{ $printedschedule->dateschedule }}" data-timeschedule="{{ $printedschedule->timeschedule }}" data-subject="{{ $printedschedule->subject }}" data-jp="{{ $printedschedule->jp }}" data-speaker="{{ $printedschedule->speaker }}" data-description="{{ $printedschedule->description }}" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+&nbsp;&nbsp;<a href="#del_printedschedule" data-printedschedule_id="{{ $printedschedule->id }}" class="badge bg-red" data-toggle="modal"><i class="fa fa-trash"></i></a>
+@endif

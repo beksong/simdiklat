@@ -150,10 +150,16 @@ Route::post('schedules/detailschedules','ScheduleController@savedetail')->name('
 Route::put('schedules/updateschedules','ScheduleController@updatedetail')->name('updatedetailschedule');
 Route::delete('schedules/deleteschedules','ScheduleController@deletedetail')->name('deletedetailschedule');
 
+// schedules details for printedschedule
+Route::post('newprintedschedule','ScheduleController@newprintedschedule')->name('newprintedschedule');
+Route::put('newprintedschedule','ScheduleController@updatenewprintedschedule')->name('newprintedschedule');
+Route::delete('newprintedschedule','ScheduleController@deleteprintedschedule')->name('newprintedschedule');
+
 // cetak detailschedules
 Route::get('schedules/detailschedules/print/{type}/{mschedule_id}','ScheduleController@printdetailschedule')->name('printdetailschedule');
 // ajax datatables detailschedules
 Route::get('getdetailschedules','ScheduleController@getdetailschedules')->name('getdetailschedules');
+Route::get('getprintedschedules','ScheduleController@getprintedschedules')->name('getprintedschedules');
 
 // open registration training
 Route::get('training/openregistration','TrainingRegistrationController@index')->name('opentraining');

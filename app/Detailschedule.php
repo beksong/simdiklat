@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Detailschedule extends Model
 {
-    protected $fillable=['masterschedule_id','user_id','subject_id','dateschedule','timeschedule','sessionschedule','jp','description','rpbmd','teaching_material','airing_material'];
+    protected $fillable=['masterschedule_id','user_id','subject_id','dateschedule','timeschedule','sessionschedule','jp','description','rpbmd','teaching_material','airing_material','uniqueschedule'];
 
     public function masterschedule()
     {
