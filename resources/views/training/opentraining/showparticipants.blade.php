@@ -62,6 +62,7 @@
                                 <th>Telepon Kantor</th>
                                 <th>Persyaratan</th>
                                 <th>Judul Proyek Perubahan/Aktualisasi</th>
+                                <th>Rancangan Proyek Perubahan / Rancangan Aktualisasi</th>
                                 <th>Abstract Proyek Perubahan/Aktualisasi</th>
                                 <th>File Proyek Perubahan/Aktualisasi</th>
                                 <th>action</th>
@@ -199,6 +200,7 @@
                 { data : "institution_phone",name: 'institution_phone'},
                 { data : "requirementsdocs",name: 'requirementsdocs'},
                 { data : "propername",name: 'propername'},
+                { data : "properplan",name: 'properplan'},
                 { data : "abstractfile",name: 'abstractfile'},
                 { data : "docsfile",name: 'docsfile'},
                 { data : "action",name : "action",orderable : false, searchable : false},

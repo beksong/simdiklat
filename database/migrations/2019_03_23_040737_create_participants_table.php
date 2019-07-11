@@ -29,6 +29,7 @@ class CreateParticipantsTable extends Migration
             $table->string('institution_address')->nullable();//alamat instansi
             $table->string('institution_phone')->nullable();//telepon instansi
             $table->string('requirements')->nullable(); //document requirements for registration
+            $table->string('properplan')->default('belum ada data');//file rancangan
             $table->string('propername')->default('belum ada data');//judul proper
             $table->string('properdocs')->default('belum ada data');//file proper
             $table->string('properslug')->default('belum ada data');//slug proper

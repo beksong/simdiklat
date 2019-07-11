@@ -52,6 +52,7 @@
                                 <td>Tanggal Mulai</td>
                                 <td>Tanggal Selesai</td>
                                 <td>Judul Proyek Perubahan</td>
+                                <td>Laporan Rancangan Proyek Perubahan / Rancangan Aktualisasi</td>
                                 <td>Abstract Proyek Perubahan</td>
                                 <td>Proyek Perubahan</td>
                             </tr>
@@ -89,8 +90,9 @@ $(document).ready(function(){
             { data : "starting_date",name : 'starting_date'},
             { data : "enddate",name : 'enddate'},
             { data : "propername",name : 'propername'},
-            { data : "docsfile",name : 'docsfile'},
-            { data : "abstractfile",name : 'abstractfile'}
+            { data : "properplan",name : 'properplan'},
+            { data : "abstractfile",name : 'abstractfile'},
+            { data : "docsfile",name : 'docsfile'}
         ],
     });
 });

@@ -160,7 +160,7 @@ class TrainingRegistrationController extends Controller
     public function asparticipant()
     {
         $participant = Participant::with(['training' => function($query){
-            $query->where('end_date','>',Carbon::now()->addDays(-30));
+            $query->where('end_date','>',Carbon::now()->addDays(-40));
         }])->where('user_id',\Auth::user()->id)->firstOrFail();
         return view('trainingregistration.asparticipant',compact('participant'));
     }
@@ -191,7 +191,13 @@ class TrainingRegistrationController extends Controller
             return Carbon::parse($participant->training->start_date)->format('d-m-Y');
         })->addColumn('enddate',function($participant){
             return Carbon::parse($participant->training->end_date)->format('d-m-Y');
-        })->rawColumns(['abstractfile','docsfile','starting_date','enddate'])->toJson();
+        })->addColumn('properplan',function($participant){
+            if($participant->properplan=='belum ada data'){
+                return 'belum ada data silahkan upload abstract <a href="training/asparticipant">disini</a>';
+            }else{
+                return '<a href="storage/proper/'.$participant->properplan.'">'.$participant->properplan.'</a>';
+            }
+        })->rawColumns(['properplan','abstractfile','docsfile','starting_date','enddate'])->toJson();
     }
 
     // as participant upload proper documents
@@ -201,9 +207,25 @@ class TrainingRegistrationController extends Controller
         $storage = Storage::disk('proper');
         $properdocs = $request->file('properdocs');
         $properabstract = $request->file('properabstract');
-
+        $properplan = $request->file('properplan');
         $participant = Participant::find($request->get('participant_id'));
 
+        //proper plan
+        if(!empty($properplan)){
+            //delete old file
+            $storage->delete($participant->properplan);
+            //update and upload file
+            $properplanname=Carbon::now().'_'.preg_replace('/\s+/','_',$properplan->getClientOriginalName());
+            $participant->update([
+                'propername' => $request->get('propername'),
+                'properplan' => $properplanname,
+                'slug' => str_slug($request->get('propername'))
+            ]);
+
+            $storage->put($properplanname,file_get_contents($properplan));
+        }
+        
+        //proper docs
         if(!empty($properdocs)){
             //delete old file
             $storage->delete($participant->properdocs);
@@ -218,13 +240,16 @@ class TrainingRegistrationController extends Controller
             $storage->put($properdocsname,file_get_contents($properdocs));
         }
 
+        //properabstract
         if(!empty($properabstract)){
             //delete old file first
             $storage->delete($participant->properabstract);
             //update and upload file
             $properabstractname=Carbon::now().'_'.preg_replace('/\s+/','_',$properabstract->getClientOriginalName());
             $participant->update([
-                'properabstract'=>$properabstractname
+                'propername' => $request->get('propername'),
+                'properabstract'=>$properabstractname,
+                'slug' => str_slug($request->get('propername'))
             ]);
             $storage->put($properabstractname,file_get_contents($properabstract));
         }        

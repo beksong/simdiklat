@@ -21,8 +21,10 @@ class Participant extends Model
         'institution_phone',
         'requirements',
         'propername',
+        'properplan',
         'properdocs',
         'properslug',
+        'unit_institution',
         'properabstract'
     ];
 

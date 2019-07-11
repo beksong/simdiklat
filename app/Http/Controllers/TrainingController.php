@@ -12,9 +12,11 @@ use Carbon\Carbon;
 use Grei\TanggalMerah;
 use App\Participant;
 use PDF;
+use Storage;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Html as Html;
 
 class TrainingController extends Controller
 {
@@ -205,22 +207,31 @@ class TrainingController extends Controller
         return DataTables::of($participants)
         ->addColumn('requirementsdocs',function($participant){
             return '<a href="../../storage/requirement/'.$participant->requirements.'">'.$participant->requirements.'</a>';
-        })->addColumn('abstractfile',function($participant){
+        })
+        ->addColumn('properplan',function($participant){
+            if($participant->properplan=='belum ada data'){
+                return 'belum ada data';
+            }else{
+                return '<a href="../../storage/proper/'.$participant->properplan.'">'.$participant->properplan.'</a>';
+            }
+        })
+        ->addColumn('abstractfile',function($participant){
             if($participant->properabstract=='belum ada data'){
                 return 'belum ada data';
             }else{
-                return '<a href="storage/proper/'.$participant->properabstract.'">'.$participant->properabstract.'</a>';
+                return '<a href="../../storage/proper/'.$participant->properabstract.'">'.$participant->properabstract.'</a>';
             }
-        })->addColumn('docsfile',function($participant){
+        })
+        ->addColumn('docsfile',function($participant){
             if ($participant->properdocs=='belum ada data') {
                 return 'belum ada data';
             } else {
-                return '<a href="storage/proper/'.$participant->properdocs.'">'.$participant->properdocs.'</a>';
+                return '<a href="../../storage/proper/'.$participant->properdocs.'">'.$participant->properdocs.'</a>';
             }
         })
         ->addColumn('action',function($participant){
             return view('training.opentraining.tbbuttonparticipant',compact('participant'));
-        })->rawColumns(['requirementsdocs','abstractfile','docsfile','action'])->toJson();
+        })->rawColumns(['requirementsdocs','properplan','abstractfile','docsfile','action'])->toJson();
     }
 
     // get trainings list for admin select2
@@ -340,8 +351,29 @@ class TrainingController extends Controller
     public function printmasterschedules($id)
     {
         $training = Training::find($id);
-        $pdf = PDF::loadView('report.schedules.masterschedule',compact('training'));
-        $pdf->setOrientation('landscape');
-        return $pdf->download('Jadwal'.$training->name.'_'.Carbon::now().'_'.'.pdf');
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+        $view =\View::make('report.schedules.masterschedule',compact('training'));
+        $html = $view->render();
+        $file = Storage::disk('public')->put('master.html',$html,'public');
+        //$file = \File::put(public_path().'/master.html',$html);
+        $filepath = Storage::disk('public')->get('master.html');
+        $spreadsheet = $reader->load(storage_path().'/app/public/master.html');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="jadwal_'.$training->slug.'.xls"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        // If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $writer = IOFactory::createWriter($spreadsheet,'Xls');
+        $writer->save('php://output'); 
+        // $pdf = PDF::loadView('report.schedules.masterschedule',compact('training'));
+        // $pdf->setOrientation('landscape');
+        // return $pdf->download('Jadwal'.$training->name.'_'.Carbon::now().'_'.'.pdf');
     }
 }

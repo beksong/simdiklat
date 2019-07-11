@@ -73,6 +73,18 @@
                         </div>
 
                         <div class="form-group has-feedback">
+                            <label for="properplan" class="col-sm-3 control-label">Upload Laporan Rancangan Proyek Perubahan / Rancangan Aktualisasi</label>
+                            <div class="col-sm-9">
+                                <input type="file" id="properplan" name="properplan" accept="application/pdf">
+                                <p>{{ $participant->properplan }}</p>
+                                <span class="fa fa-file-o form-control-feedback"></span>
+                                @if($errors->has('properplan'))
+                                    <span id="helpBlock2" class="help-block"><strong>{{ $errors->first('properplan') }}</strong></span> 
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
                             <label for="properabstract" class="col-sm-3 control-label">Upload Abstrak File/Softcopy Proyek Perubahan</label>
                             <div class="col-sm-9">
                                 <input type="file" id="properabstract" name="properabstract" accept="application/pdf">
