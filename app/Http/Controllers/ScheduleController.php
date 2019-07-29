@@ -111,9 +111,9 @@ class ScheduleController extends Controller
         }
 
         //check weekend
-        if($tanggal->isWeekend()){
-            return redirect()->back()->with('message','Hari Minggu tidak bisa dipilih sebagai hari diklat');
-        }
+        // if($tanggal->isWeekend()){
+        //     return redirect()->back()->with('message','Hari Minggu tidak bisa dipilih sebagai hari diklat');
+        // }
         
         $isHoliday = new TanggalMerah();
         //check tanggal merah nasional 
